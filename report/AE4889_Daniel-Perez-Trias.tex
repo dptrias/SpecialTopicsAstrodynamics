@@ -1,0 +1,352 @@
+\documentclass[a4paper,12pt]{article}
+
+% Encoding & fonts 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Page layout 
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+
+% Graphics & figures
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{float}
+\usepackage{subcaption}
+
+% Mathematics 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}    
+
+% Tables 
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multirow}
+
+% Colors 
+\usepackage{xcolor}
+\usepackage{xkcdcolors}
+
+% Code listings
+\usepackage{listings}
+\lstset{
+    breaklines=true,
+    breakatwhitespace=true,
+    basicstyle=\ttfamily\small,
+    frame=single
+}
+
+% Algorithms 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Miscellaneous
+\usepackage{cancel}
+\usepackage{comment}
+\usepackage{enumitem}
+\usepackage{todonotes}
+\usepackage{pdfpages}
+\usepackage{lipsum}     
+\usepackage{siunitx}    
+\usepackage{csquotes}   
+\usepackage{microtype}
+
+\usepackage[
+    colorlinks  = true,
+    pdfstartview= FitV,
+    linkcolor   = xkcdBlue,
+    citecolor   = xkcdRed,
+    urlcolor    = xkcdGreen
+]{hyperref}
+
+\usepackage[backend=biber, style=ieee]{biblatex}
+\addbibresource{ref.bib}
+
+\usepackage{fancyhdr}
+\fancypagestyle{firstpage}{
+    \fancyhf{}
+    \setlength{\headheight}{14pt}
+    \setlength{\headsep}{0.2in}
+    \lhead{\small AE4889 -- \textit{MIMOSA}}
+    \rhead{\small Daniel Pérez Trias}                       
+    \cfoot{\thepage}
+}
+\pagestyle{firstpage}  
+
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{1pt}{1pt}
+\titlespacing*{\subsection}{0pt}{1pt}{1pt}
+
+\setlength{\textfloatsep}{2pt}
+\setlength{\intextsep}{2pt}
+\setlength{\floatsep}{2pt}
+
+\usepackage{glossaries}
+\makeglossaries
+
+\newacronym{mimosa}{MIMOSA}{MIssion to Mars with a sOlar SAil}
+\newacronym{jpl}{JPL}{Jet Propulsion Laboratory}
+\newacronym{cr3bp}{CR3BP}{Circular Restricted Three-Body Problem}
+\newacronym{aep}{AEP}{Artificial Equilibrium Point}
+
+\begin{document}
+
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{center}
+    {\LARGE \textbf{AE4889 \\ Special Topics in Astrodynamics} \\ \textit{MIMOSA} -- MIssion to Mars with a sOlar SAil \par}
+    \vspace{1cm}
+    {\Large Daniel Pérez Trias -- 6565158 \par}
+    {\Large Delft, \today\par}
+    \vspace{1em}
+    {\large \href{https://github.com/dptrias/SpecialTopicsAstrodynamics}{\texttt{github.com/dptrias/SpecialTopicsAstrodynamics}} \par}
+    \vspace{1em}
+    {\normalsize \textit{Collaborated with:} \par}
+    \vspace{0.5em}
+    {\normalsize
+        \begin{minipage}{0.4\textwidth}
+            \begin{enumerate}[label=\arabic*.]
+                \item Andreu Craus Vidal
+                \item Rodrigo Duarte Soares
+            \end{enumerate}
+        \end{minipage}
+    \par}
+    \vspace{4em}
+    \begin{tabular}{ll}
+        Personal problem specification & \\
+        \toprule
+        \textbf{Parameter} & \textbf{Value} \\
+        \midrule
+        Sun-Earth Lagrange point     & L$_2$ \\
+        Sun-Mars Lagrange point    & L$_2$ \\
+        Shift in Lagrange points     & $0.0005$ \\
+        Radius Martian parking orbit & $\SI{306 666}{\km}$ \\
+        Lightness number             & $0.025$ \\
+        \bottomrule
+    \end{tabular}
+\end{center}
+
+
+\newpage
+
+% --- Table of contents -------------------------------------------------------
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+% --- List of acronyms --------------------------------------------------------
+\printglossary[type=\acronymtype, title=List of Acronyms]
+\addcontentsline{toc}{section}{List of Acronyms}
+\newpage
+
+% --- List of figures ---------------------------------------------------------
+% \listoffigures
+% \addcontentsline{toc}{section}{List of Figures}
+% \newpage
+% 
+% % --- List of tables ----------------------------------------------------------
+% \listoftables
+% \addcontentsline{toc}{section}{List of Tables}
+% \newpage
+% 
+
+% --- Start main body with page counter reset ---------------------------------
+\setcounter{page}{1}
+
+% INTRODUCTION
+\phantomsection
+\section*{WP1 Sun-Earth and Sun-Mars Lagrange points}
+\addcontentsline{toc}{section}{WP1 Sun-Earth and Sun-Mars Lagrange points}
+\label{sec:wp1}
+
+\begin{enumerate}
+    \item[\textbf{1.1a}] The Lagrange points of the Sun-Earth and Sun-Mars systems are computed using Newton's method over equation \eqref{eq:colinear_lagrange}, which is derived from the \acrfull{cr3bp}. The resulting dimensionless coordinates of the colinear Lagrange points (L$_2$) are presented in Table \ref{tab:lagrange_points}.
+    \begin{equation}
+        \label{eq:colinear_lagrange}
+        x - \frac{1-\mu}{(x+\mu)^2} - \frac{\mu}{(x-1+\mu)^2} = 0
+    \end{equation}
+    \begin{table}[h]
+        \centering
+        \caption{Dimensionless coordinates $(x_i, y_i, z_i)$ of the Sun-Earth and Sun-Mars
+        colinear Lagrange points in their respective synodic reference frames, obtained
+        from the solution of the circular restricted three-body problem using a Newton method.}
+        \label{tab:lagrange_points}
+        \begin{tabular}{lccc}
+            \toprule
+            \textbf{Lagrange point} & $x_i$ [LU] & $y_i$ [LU] & $z_i$ [LU]\\
+            \midrule
+            Sun-Earth L$_2$ & 1.01009044 & 0 & 0 \\
+            Sun-Mars L$_2$  & 1.00476311 & 0 & 0 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    
+    \item[\textbf{1.1b}] For verification purposes, the dimensionless coordinates of the colinear Lagrange points are also extracted from the \href{https://ssd.jpl.nasa.gov/tools/periodic_orbits.html\#/periodic}{\acrfull{jpl} Solar System Dynamics three-body periodic orbits tool}, which are presented in Table \ref{tab:lagrange_points_jpl}.
+    It can be observed that for the represented number of digits, the values are identical, with differences on the order of $10^{-9}$ LU, likely due to shared system parameters between both methods. \textit{(53 words)}
+
+    \begin{table}[h]
+        \centering
+        \caption{Dimensionless $x$ coordinates of the Sun-Earth and Sun-Mars
+        colinear Lagrange points in their respective synodic reference frames per JPL and their absolute differences w.r.t. the values obtained from the Newton method.}
+        \label{tab:lagrange_points_jpl}
+        \begin{tabular}{lcc}
+            \toprule
+            \textbf{Lagrange point} & $x_i$ [LU]& $\Delta x_i$ [LU] \\
+            \midrule
+            Sun-Earth L$_2$ & $1.01009044$ & $4.21585256 \times 10^{-9}$ \\
+            Sun-Mars L$_2$  & $1.00476311$ & $3.32491457 \times 10^{-9}$ \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \item[\textbf{1.2}] From the results it can be observed that the Sun-Mars L$_2$ point is closer to Mars than the Earth L$_2$ is to Earth (in dimensionless units). At L$_2$, the gravitational pulls of both bodies and the 
+    centrifugal force balance. Mars, being less massive, exerts a weaker gravitational pull, so the equilibrium point must sit closer to the planet to compensate, allowing its gravity to 
+    contribute sufficiently to the force balance. \textit{(70 words)}
+\end{enumerate}
+
+\newpage
+\phantomsection
+\section*{WP2 Artificial Lagrange points}
+\addcontentsline{toc}{section}{WP2 Artificial Lagrange points}
+\label{sec:wp2}
+\begin{enumerate}
+    \item[\textbf{2.1a}] The required lightness number, $\beta$, to achieve a shift of $0.0005$ LU in the Lagrange points along the Sun-Planet line is computed using the formula derived from the balance of forces at the artificial equilibrium point (lying at the Sun-Planet line):
+    \begin{equation}
+        \beta = \frac{(x_{\text{AEP}} + \mu)^2}{1 - \mu} \left[ -x_{\text{AEP}} + \frac{1-\mu}{(x_{\text{AEP}}+\mu)^2} + \frac{\mu}{(x_{\text{AEP}}-(1-\mu))^2} \right]
+    \end{equation}
+    which produces the results shown in Table \ref{tab:lightness_number}. 
+
+    \begin{table}[h]
+        \centering
+        \caption{Required lightness number to achieve the specified shift in the Lagrange points.}
+        \label{tab:lightness_number}
+        \begin{tabular}{lp{5cm}c}
+            \toprule
+            \textbf{Lagrange point} & \textbf{Shift in Lagrange point along the Sun-Planet line} & \textbf{Required lightness number,} $\beta$ \\
+            \midrule
+            Sun-Earth L$_2$ & $0.0005$ & $4.76757628 \times 10^{-3}$ \\
+            Sun-Mars L$_2$  & $0.0005$ & $5.06104189 \times 10^{-3}$ \\
+            \bottomrule
+        \end{tabular}
+    \end{table} \par
+
+    With respect to the feasibility of achieving such lightness numbers, previously proposed missions such as \textit{Sunjammer} have targeted lightness numbers on the order of $0.03$, \cite{heiligers2014}, which is 
+    an order of magnitude higher than the required values, indicating that the proposed shifts are indeed feasible with current or near-term solar sail technology. \textit{(51 words)}
+    
+    \item[\textbf{2.1b}] Since the required shift is along the Sun-Planet line, and all the forces (gravitational and centrifugal) at the colinear Lagrange points are aligned along this line, the required sail orientation to achieve the desired shift
+    is also aligned with this line, that is, with the sail normal vector pointing directly away from the Sun, as shown in Table \ref{tab:sail_orientation}. \textit{(58 words)}
+    
+    \begin{table}[h]
+        \centering
+        \caption{Required sail orientation to achieve the required shift in the Lagrange points.}
+        \label{tab:sail_orientation}
+        \begin{tabular}{lccc}
+            \toprule
+            \textbf{Lagrange point} & $n_{x,i}$ & $n_{y,i}$ & $n_{z,i}$ \\
+            \midrule
+            Sun-Earth L$_2$ & $1$ & $0$ & $0$ \\
+            Sun-Mars L$_2$  & $1$ & $0$ & $0$ \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \item[\textbf{2.2}] To verify the required lightness numbers calculations the colinear \acrfull{aep} specified in \cite{heiligers2014} is calculated using this work's implementation and compared to the value reported in the reference, 
+    To verify the required lightness numbers calculations the colinear \acrfull{aep} specified in \cite{heiligers2014} is calculated using this work's implementation and compared to the value reported in the reference, 
+    the considered case being the Sun-Earth system with a AEP located at $x_{\text{AEP}} = 0.983867$ LU.
+    The resulting lightness number is $\beta = 0.0363$, which matches the value reported in \cite{heiligers2014}, confirming the correctness of the implementation. \textit{(64 words)}
+
+    \item[\textbf{2.3}] The required area of the solar sail is derived from the definition of the lightness number:
+    \begin{equation}
+        \beta \frac{\mu_\odot}{r^2} = 2 P \frac{A}{m} \rightarrow A = \frac{\beta \mu_\odot m}{2 P r^2}
+    \end{equation}
+    where $P$ is the solar radiation pressure at the location of the sail, which can be calculated from the solar constant, $S_{\odot}$ \cite{kopp2011}, and the speed of light, $c$, as follows:
+    \begin{equation}
+        P = \frac{S_{\odot}}{c} \left( \frac{\text{AU}}{r} \right)^2
+    \end{equation}
+    The resulting sizes required to achieve the specified shifts in the Lagrange points are shown in Table \ref{tab:sail_area}.
+    \begin{table}[h]
+        \centering
+        \caption{Required solar-sail side-length to achieve the required shift in the Lagrange points.}
+        \label{tab:sail_area}
+        \begin{tabular}{lccc}
+            \toprule
+            \textbf{Lagrange point} & Required solar-sail side-length [m] \\
+            \midrule
+            Sun-Earth L$_2$ & $17.6459$\\
+            Sun-Mars L$_2$  & $18.1809$\\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    These sizes are within the range of previously proposed solar sails(e.g., \textit{Sunjammer} had a sail area of $38 \times 38$ m$^2$), indicating that the required shifts are indeed feasible with current or near-term solar sail technology.
+    
+    \item[\textbf{2.4}] To analyse the sensitivity of the required lightness number to the shift in the Lagrange point, a range of 21 shifts from $0.0005$ LU to $0.001$ LU is considered, and the corresponding lightness numbers are computed using the formula from Task 2.1a. The results are shown in Figure \ref{fig:beta_sensitivity}. \par 
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{beta_sensitivity.png}
+        \caption{Sensitivity of the required lightness number, $\beta$, to the shift in the Lagrange point, $\Delta x$, for the Sun-Earth and Sun-Mars systems.}
+        \label{fig:beta_sensitivity}
+    \end{figure}
+    Here it can be observed that the required lightness number follows a quasi-linear trend with
+    respect to the shift in the Lagrange point. As the shift $\Delta x$ increases, the sail is
+    displaced further from the natural L$_2$ location along the Sun-planet line, where the
+    gravitational attractions of the Sun and the planet as well as the centrifugal acceleration
+    all vary smoothly with position. For small displacements, these variations are well
+    approximated as linear functions of $\Delta x$, so the additional solar radiation pressure
+    acceleration required to maintain equilibrium at the new location also scales approximately
+    linearly with the shift, producing the observed trend. \textit{(104 words)}
+\end{enumerate}
+\newpage
+\phantomsection
+\section*{WP3 Stability of the (artificial) Lagrange points}
+\addcontentsline{toc}{section}{WP3 Stability of the (artificial) Lagrange points}
+\label{sec:wp3}
+\lipsum[3]
+
+\newpage
+\phantomsection
+\section*{WP4 Invariant manifolds and application to Mars exploration mission}
+\addcontentsline{toc}{section}{WP4 Invariant manifolds and application to Mars exploration mission}
+\label{sec:wp4}
+\lipsum[4]
+
+% \begin{figure}[H]
+%     \centering
+%     % \includegraphics[width=0.75\textwidth]{figures/example.pdf}
+%     \rule{0.75\textwidth}{4cm}  % placeholder; replace with \includegraphics
+%     \caption{Caption describing the figure. Include units and clarify all
+%              curves or data series shown.}
+%     \label{fig:example}
+% \end{figure}
+% 
+% \begin{table}[H]
+%     \centering
+%     \caption{Summary of simulation parameters.}
+%     \label{tab:example}
+%     \begin{tabular}{llS[table-format=4.3]}
+%         \toprule
+%         Parameter       & Symbol    & {Value} \\
+%         \midrule
+%         Semi-major axis & $a$       & 6778.137 \\
+%         Eccentricity    & $e$       & 0.000 \\
+%         Inclination     & $i$       & 28.500 \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+
+% REFERENCES
+\newpage
+\printbibliography[heading=bibintoc, title={References}]
+
+%  APPENDICES
+% \newpage
+% \appendix
+% 
+% \section{Appendix Title}
+% \label{app:A}
+% 
+% Include supplementary derivations, raw data tables, or code listings here.
+% Appendices are labelled A, B, C, etc., automatically.
+% 
+% \lipsum[7]
+
+\end{document}

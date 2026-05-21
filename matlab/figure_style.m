@@ -1,0 +1,14 @@
+set(groot, 'defaultTextInterpreter', 'latex');
+set(groot, 'defaultLegendInterpreter', 'latex');
+set(groot, 'defaultAxesTickLabelInterpreter', 'latex');
+set(groot, 'defaultAxesFontSize', 16);
+set(groot, 'defaultAxesLabelFontSizeMultiplier', 20/16);
+set(groot, 'defaultAxesTitleFontSizeMultiplier', 22/16);
+set(groot, 'defaultLegendFontSizeMode', 'manual');
+set(groot, 'defaultLegendFontSize', 20);
+set(groot, 'defaultLegendLocation', 'northwest');
+set(groot, 'defaultAxesLineWidth', 1.2);
+set(groot, 'defaultLineLineWidth', 1.5);
+set(groot, 'defaultAxesGridAlpha', 0.3);
+set(groot, 'defaultAxesMinorGridAlpha', 0.15);
+set(groot, 'DefaultFigureVisible', 'off');

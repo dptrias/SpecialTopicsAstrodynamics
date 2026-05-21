@@ -1,0 +1,18 @@
+*.vscode
+# LaTeX intermediate files
+*.aux
+*.bbl*
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls*
+*.ist
+report/AE4889_Daniel-Perez-Trias.log
+*.nlo
+*.out
+*.run.xml
+*.toc
+*.synctex.gz
