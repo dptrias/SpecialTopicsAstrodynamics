@@ -105,10 +105,10 @@
     \vspace{0.5em}
     {\normalsize
         \begin{minipage}{0.4\textwidth}
-            \begin{enumerate}[label=\arabic*.]
+            \begin{itemize}[label=\textendash,leftmargin=*]
                 \item Andreu Craus Vidal
                 \item Rodrigo Duarte Soares
-            \end{enumerate}
+            \end{itemize}
         \end{minipage}
     \par}
     \vspace{4em}
@@ -117,8 +117,8 @@
         \toprule
         \textbf{Parameter} & \textbf{Value} \\
         \midrule
-        Sun-Earth Lagrange point     & L$_2$ \\
-        Sun-Mars Lagrange point    & L$_2$ \\
+        Sun--Earth Lagrange point     & L$_2$ \\
+        Sun--Mars Lagrange point    & L$_2$ \\
         Shift in Lagrange points     & $0.0005$ \\
         Radius Martian parking orbit & $\SI{306 666}{\km}$ \\
         Lightness number             & $0.025$ \\
@@ -155,19 +155,19 @@
 
 % INTRODUCTION
 \phantomsection
-\section*{WP1 Sun-Earth and Sun-Mars Lagrange points}
-\addcontentsline{toc}{section}{WP1 Sun-Earth and Sun-Mars Lagrange points}
+\section*{WP1 Sun--Earth and Sun--Mars Lagrange points}
+\addcontentsline{toc}{section}{WP1 Sun--Earth and Sun--Mars Lagrange points}
 \label{sec:wp1}
 
 \begin{enumerate}
-    \item[\textbf{1.1a}] The Lagrange points of the Sun-Earth and Sun-Mars systems are computed using Newton's method over equation \eqref{eq:colinear_lagrange}, which is derived from the \acrfull{cr3bp}. The resulting dimensionless coordinates of the colinear Lagrange points (L$_2$) are presented in Table \ref{tab:lagrange_points}.
+    \item[\textbf{1.1a}] The Lagrange points of the Sun--Earth and Sun--Mars systems are computed using Newton's method over equation \eqref{eq:colinear_lagrange}, which is derived from the \acrfull{cr3bp}. The resulting dimensionless coordinates of the colinear Lagrange points (L$_2$) are presented in Table \ref{tab:lagrange_points}.
     \begin{equation}
         \label{eq:colinear_lagrange}
         x - \frac{1-\mu}{(x+\mu)^2} - \frac{\mu}{(x-1+\mu)^2} = 0
     \end{equation}
     \begin{table}[h]
         \centering
-        \caption{Dimensionless coordinates $(x_i, y_i, z_i)$ of the Sun-Earth and Sun-Mars
+        \caption{Dimensionless coordinates $(x_i, y_i, z_i)$ of the Sun--Earth and Sun--Mars
         colinear Lagrange points in their respective synodic reference frames, obtained
         from the solution of the circular restricted three-body problem using a Newton method.}
         \label{tab:lagrange_points}
@@ -175,8 +175,8 @@
             \toprule
             \textbf{Lagrange point} & $x_i$ [LU] & $y_i$ [LU] & $z_i$ [LU]\\
             \midrule
-            Sun-Earth L$_2$ & 1.01009044 & 0 & 0 \\
-            Sun-Mars L$_2$  & 1.00476311 & 0 & 0 \\
+            Sun--Earth L$_2$ & 1.01009044 & 0 & 0 \\
+            Sun--Mars L$_2$  & 1.00476311 & 0 & 0 \\
             \bottomrule
         \end{tabular}
     \end{table}
@@ -186,20 +186,20 @@
 
     \begin{table}[h]
         \centering
-        \caption{Dimensionless $x$ coordinates of the Sun-Earth and Sun-Mars
+        \caption{Dimensionless $x$ coordinates of the Sun--Earth and Sun--Mars
         colinear Lagrange points in their respective synodic reference frames per JPL and their absolute differences w.r.t. the values obtained from the Newton method.}
         \label{tab:lagrange_points_jpl}
         \begin{tabular}{lcc}
             \toprule
             \textbf{Lagrange point} & $x_i$ [LU]& $\Delta x_i$ [LU] \\
             \midrule
-            Sun-Earth L$_2$ & $1.01009044$ & $4.21585256 \times 10^{-9}$ \\
-            Sun-Mars L$_2$  & $1.00476311$ & $3.32491457 \times 10^{-9}$ \\
+            Sun--Earth L$_2$ & $1.01009044$ & $4.21585256 \times 10^{-9}$ \\
+            Sun--Mars L$_2$  & $1.00476311$ & $3.32491457 \times 10^{-9}$ \\
             \bottomrule
         \end{tabular}
     \end{table}
 
-    \item[\textbf{1.2}] From the results it can be observed that the Sun-Mars L$_2$ point is closer to Mars than the Earth L$_2$ is to Earth (in dimensionless units). At L$_2$, the gravitational pulls of both bodies and the 
+    \item[\textbf{1.2}] From the results it can be observed that the Sun--Mars L$_2$ point is closer to Mars than the Earth L$_2$ is to Earth (in dimensionless units). At L$_2$, the gravitational pulls of both bodies and the 
     centrifugal force balance. Mars, being less massive, exerts a weaker gravitational pull, so the equilibrium point must sit closer to the planet to compensate, allowing its gravity to 
     contribute sufficiently to the force balance. \textit{(70 words)}
 \end{enumerate}
@@ -224,8 +224,8 @@
             \toprule
             \textbf{Lagrange point} & \textbf{Shift in Lagrange point along the Sun-Planet line} & \textbf{Required lightness number,} $\beta$ \\
             \midrule
-            Sun-Earth L$_2$ & $0.0005$ & $4.76757628 \times 10^{-3}$ \\
-            Sun-Mars L$_2$  & $0.0005$ & $5.06104189 \times 10^{-3}$ \\
+            Sun--Earth L$_2$ & $0.0005$ & $4.76757628 \times 10^{-3}$ \\
+            Sun--Mars L$_2$  & $0.0005$ & $5.06104189 \times 10^{-3}$ \\
             \bottomrule
         \end{tabular}
     \end{table} \par
@@ -244,15 +244,15 @@
             \toprule
             \textbf{Lagrange point} & $n_{x,i}$ & $n_{y,i}$ & $n_{z,i}$ \\
             \midrule
-            Sun-Earth L$_2$ & $1$ & $0$ & $0$ \\
-            Sun-Mars L$_2$  & $1$ & $0$ & $0$ \\
+            Sun--Earth L$_2$ & $1$ & $0$ & $0$ \\
+            Sun--Mars L$_2$  & $1$ & $0$ & $0$ \\
             \bottomrule
         \end{tabular}
     \end{table}
 
     \item[\textbf{2.2}] To verify the required lightness numbers calculations the colinear \acrfull{aep} specified in \cite{heiligers2014} is calculated using this work's implementation and compared to the value reported in the reference, 
     To verify the required lightness numbers calculations the colinear \acrfull{aep} specified in \cite{heiligers2014} is calculated using this work's implementation and compared to the value reported in the reference, 
-    the considered case being the Sun-Earth system with a AEP located at $x_{\text{AEP}} = 0.983867$ LU.
+    the considered case being the Sun--Earth system with a AEP located at $x_{\text{AEP}} = 0.983867$ LU.
     The resulting lightness number is $\beta = 0.0363$, which matches the value reported in \cite{heiligers2014}, confirming the correctness of the implementation. \textit{(64 words)}
 
     \item[\textbf{2.3}] The required area of the solar sail is derived from the definition of the lightness number:
@@ -272,8 +272,8 @@
             \toprule
             \textbf{Lagrange point} & Required solar-sail side-length [m] \\
             \midrule
-            Sun-Earth L$_2$ & $17.6459$\\
-            Sun-Mars L$_2$  & $18.1809$\\
+            Sun--Earth L$_2$ & $17.6459$\\
+            Sun--Mars L$_2$  & $18.1809$\\
             \bottomrule
         \end{tabular}
     \end{table}
@@ -283,7 +283,7 @@
     \begin{figure}[h]
         \centering
         \includegraphics[width=0.75\textwidth]{beta_sensitivity.png}
-        \caption{Sensitivity of the required lightness number, $\beta$, to the shift in the Lagrange point, $\Delta x$, for the Sun-Earth and Sun-Mars systems.}
+        \caption{Sensitivity of the required lightness number, $\beta$, to the shift in the Lagrange point, $\Delta x$, for the Sun--Earth and Sun--Mars systems.}
         \label{fig:beta_sensitivity}
     \end{figure}
     Here it can be observed that the required lightness number follows a quasi-linear trend with
@@ -300,7 +300,29 @@
 \section*{WP3 Stability of the (artificial) Lagrange points}
 \addcontentsline{toc}{section}{WP3 Stability of the (artificial) Lagrange points}
 \label{sec:wp3}
-\lipsum[3]
+
+    \begin{equation}
+        (\mathbf{a_s})_{ij} = \frac{\partial a_{s,i}}{\partial j} = \bm{\zeta} \mathbf{\hat{n}}^T
+    \end{equation}
+    Where:
+    \begin{equation}
+        \bm{\zeta} = \frac{4 \beta (1-\mu) (\mathbf{\hat{n}} \cdot \mathbf{\hat{r}_1})}{r_1^3}\left[\frac{\mathbf{\hat{n}}}{2} - (\mathbf{\hat{n}} \cdot \mathbf{\hat{r}_1})\mathbf{\hat{r}_1}\right]
+    \end{equation}
+    \begin{table}[h]
+        \centering
+        \caption{Eigenvalues of the classical and artificial Lagrange points.}        
+        \label{tab:eigenvalues}
+        \begin{tabular}{lcccc}
+            \toprule
+            \textbf{Lagrange point} & $\lambda_1$ & $\lambda_2$ & $\lambda_3$ & $\lambda_4$ \\
+            \midrule
+            Sun--Earth Classical  & $-2.484281$ & $-2.056992i$ & $+2.056992i$ & $+2.484281$ \\
+            Sun--Earth Artificial & $-2.673872$ & $-2.174388i$ & $+2.174388i$ & $+2.673872$ \\
+            Sun--Mars Classical   & $-2.496888$ & $-2.064657i$ & $+2.064657i$ & $+2.496888$ \\
+            Sun--Mars Artificial  & $-2.931888$ & $-2.335453i$ & $+2.335453i$ & $+2.931888$ \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
 
 \newpage
 \phantomsection

@@ -17,17 +17,17 @@ fprintf('Beta for Sun-Mars L2: %.8e\n', beta_SM);
 
 mu_S = 132712e15;
 m_s = 100;
-S_sun = 1361;  % W/m^2
+S_Sun = 1361;  % W/m^2
 c = 299792458;  % m/s
 LU_SE = 149597870.7e3;  % m
 LU_SM = 208321282e3;  % m
-P_Earth = S_sun / c;  % Radiation pressure at Earth distance
-P_Mars = S_sun * (LU_SE / LU_SM)^2 / c;  % Radiation pressure at Mars distance
+P_Earth = S_Sun / c;  % Radiation pressure at Earth distance
+P_Mars = S_Sun * (LU_SE / LU_SM)^2 / c;  % Radiation pressure at Mars distance
 
 x_SE = (L2_SE - dx) * LU_SE;
 x_SM = (L2_SM - dx) * LU_SM;
-A_SE = beta_SE * mu_S * m_s / (2 * SolarRadiationPressure(S_sun, x_SE) * x_SE^2);
-A_SM = beta_SM * mu_S * m_s / (2 * SolarRadiationPressure(S_sun, x_SM) * x_SM^2);
+A_SE = beta_SE * mu_S * m_s / (2 * SolarRadiationPressure(S_Sun, x_SE) * x_SE^2);
+A_SM = beta_SM * mu_S * m_s / (2 * SolarRadiationPressure(S_Sun, x_SM) * x_SM^2);
 
 fprintf('Required length for Sun-Earth L2 sail: %.4f m\n', sqrt(A_SE));
 fprintf('Required length for Sun-Mars L2 sail: %.4f m\n', sqrt(A_SM));

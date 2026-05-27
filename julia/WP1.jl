@@ -10,8 +10,8 @@ begin
     SSP = load_solar_system_parameters()
 
     # Compute L2 points
-    L2_SE = classical_lagrange_points(SSP["μ_SE"], 2)
-    L2_SM = classical_lagrange_points(SSP["μ_SM"], 2)
+    L2_SE = classical_lagrange_point(SSP["μ_SE"], 2)
+    L2_SM = classical_lagrange_point(SSP["μ_SM"], 2)
 
     # JPL reference values
     L2_SE_JPL = 1.01009044

@@ -1,5 +1,6 @@
 *.vscode
 # LaTeX intermediate files
+*SAVE-ERROR
 *.aux
 *.bbl*
 *.bcf
