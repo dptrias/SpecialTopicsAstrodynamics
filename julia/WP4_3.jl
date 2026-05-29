@@ -27,12 +27,12 @@ begin
     μ = SSP["μ_SM"]
 
     r_Earth_SM = SSP["LU_SE"] / SSP["LU_SM"]  # Earth-Sun distance in SM normalised units
-    r_MPO_meters = 306666e3 #    182222.0e3 # Mars parking orbit radius in meters
+    r_MPO_meters = 306666e3 # 182222.0e3 #  # 244444e3  # Mars parking orbit radius in meters
     r_MPO = r_MPO_meters / SSP["LU_SM"]  # Mars parking orbit radius in SM normalised units
 
     # Solar sail parameters
-    β = 0.025
-    α_range = range(-90, 90, length=73)  # Cone angles, 2.5° increments
+    β = 0.025  # 0.0363
+    α_range = range(-90, 90, length=73)  # Cone angles
 
     # Compute classical L2 point
     L₂ = classical_lagrange_point(μ, 2)
@@ -65,10 +65,10 @@ begin
         if sol.retcode == ReturnCode.Terminated
             sols_leg_1[α_index] = sol
             tof_leg_1[α_index] = -sol.t[end] * SSP["TU_SM"] / (24 * 3600 * 365.256)
-            Δv_earth[α_index], _ = compute_deltav_earth_departure(sol, μ, SSP)
+            Δv_earth[α_index], _ = compute_deltav_earth_departure(sol, SSP)
         else
-            Δv_earth[α_index] = Inf
-            tof_leg_1[α_index] = Inf
+            Δv_earth[α_index] = NaN
+            tof_leg_1[α_index] = NaN
         end
 
         # SM-L2 to Mars parking orbit transfer (Leg 2)
@@ -82,15 +82,15 @@ begin
         if sol.retcode == ReturnCode.Terminated
             sols_leg_2[α_index] = sol
             tof_leg_2[α_index] = sol.t[end] * SSP["TU_SM"] / (24 * 3600 * 365.256)
-            Δv_mars[α_index], _ = compute_deltav_mars_insertion(sol, μ, r_MPO, SSP)
+            Δv_mars[α_index], _ = compute_deltav_mars_insertion(sol, r_MPO, SSP)
         else
-            Δv_mars[α_index] = Inf
-            tof_leg_2[α_index] = Inf
+            Δv_mars[α_index] = NaN
+            tof_leg_2[α_index] = NaN
         end
     end
 
-    idx_leg_1_min = argmin(Δv_earth)
-    idx_leg_2_min = argmin(Δv_mars)
+    idx_leg_1_min = argmin(replace(Δv_earth, NaN => Inf))
+    idx_leg_2_min = argmin(replace(Δv_mars, NaN => Inf))
 
     @printf("Optimal Leg 1 (Earth to SM-L2):\n")
     @printf("   Optimal cone angle: %.1f°\n", α_range[idx_leg_1_min])
@@ -101,8 +101,6 @@ begin
     @printf("   Minimum Δv: %.4f m/s\n", Δv_mars[idx_leg_2_min])
     @printf("   Time of flight: %.4f years\n\n", tof_leg_2[idx_leg_2_min])
 
-    valid_1 = isfinite.(Δv_earth)
-    valid_2 = isfinite.(Δv_mars)
     fig = Figure(size=(1500, 800))
     ax1 = Axis(fig[1, 1];
         xlabel=L"x \ \mathrm{[LU]}",
@@ -172,13 +170,13 @@ begin
     fig = Figure()
     ax = Axis(fig[1, 1];
         xlabel=L"\alpha \ \mathrm{[^\circ]}",
-        ylabel=L"\Delta v \ \mathrm{[km/s]}",
+        ylabel=L"\Delta V \ \mathrm{[m/s]}",
         limits=(minimum(α_range), maximum(α_range), nothing, nothing),
         xticklabelrotation=π / 6
     )
 
-    lines!(ax, collect(α_range)[valid_1], Δv_earth[valid_1]; color=:blue, linewidth=4, label=L"\Delta V_E")
-    lines!(ax, collect(α_range)[valid_2], Δv_mars[valid_2]; color=:red, linewidth=4, label=L"\Delta V_M")
+    lines!(ax, collect(α_range), Δv_earth; color=:blue, linewidth=4, label=L"\Delta V_E")
+    lines!(ax, collect(α_range), Δv_mars; color=:red, linewidth=4, label=L"\Delta V_M")
     axislegend(ax; position=:lt)
 
     save(joinpath(figures_dir, "wp43_deltav_vs_alpha.png"), fig, px_per_unit=4)
@@ -187,7 +185,7 @@ begin
     θ_Earth = atan(sols_leg_1[idx_leg_1_min][2, end], sols_leg_1[idx_leg_1_min][1, end] + μ)
     @printf("Earth-Mars angle at Earth departure: %.4f°\n", rad2deg(θ_Earth))
     θ₀ = deg2rad(122.35)
-    t_launch = (θ_Earth - θ₀) / (1 / SSP["TU_SE"] - 1 / SSP["TU_SM"])
+    t_launch = mod(θ_Earth - θ₀, 2π) / (1 / SSP["TU_SE"] - 1 / SSP["TU_SM"])
     initial_epoch = DateTime(2030, 1, 1)
     launch_epoch = initial_epoch + Second(round(Int, t_launch))
     @printf("Earliest possible launch date: %s\n", string(launch_epoch))

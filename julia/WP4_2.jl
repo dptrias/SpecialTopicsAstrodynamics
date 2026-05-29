@@ -86,7 +86,7 @@ begin
     @printf("Time of flight from SM-L2 to Mars parking orbit: %.2f days\n", t_flight)
 
     # Delta-V
-    Δv_Mars, _ = compute_deltav_mars_insertion(sol_l2_mpo, μ, r_MPO, SSP)
+    Δv_Mars, _ = compute_deltav_mars_insertion(sol_l2_mpo, r_MPO, SSP)
     @printf("Delta-V required at intersection for circular orbit insertion: %.4f m/s\n", Δv_Mars)
 
     @printf("\n=== END OF WP4.2 ===\n\n")

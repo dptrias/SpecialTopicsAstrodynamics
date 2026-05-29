@@ -8,29 +8,35 @@ const SolarSail = Tuple{Float64,Vector{Float64}}
 
 """ 
     load_solar_system_parameters() -> Dict{String, Any}
+
+Return a dictionary of solar system constants and normalisation parameters for
+the Sun-Earth (SE) and Sun-Mars (SM) CR3BP systems. Keys include mass parameters
+μ_SE and μ_SM, gravitational constants, solar irradiance, speed of light,
+characteristic length and time units, and the gravitational parameter of Mars.
 """
 function load_solar_system_parameters()::Dict{String,Any}
     return Dict(
         "μ_SE" => 3.0542e-6,
         "μ_SM" => 3.227154996101724e-7,
-        "μ_S" => 132712e15,          # m^3/s^2
-        "S_Sun" => 1361.0,             # W/m^2 at 1 AU
-        "c" => 299792458.0,        # m/s
-        "LU_SE" => 149597870.7e3,     # m
-        "LU_SM" => 208321282.0e3,     # m
+        "μ_S" => 132712e15,                         # m^3/s^2
+        "S_Sun" => 1361.0,                          # W/m^2 at 1 AU
+        "c" => 299792458.0,                         # m/s
+        "LU_SE" => 149597870.7e3,                   # m
+        "LU_SM" => 208321282.0e3,                   # m
         "TU_SE" => 365.256 * 24 * 3600.0 / (2 * π), # s
-        "TU_SM" => 8253622.0, # s
-        "GM_Mars" => 4.282837e13 # m^3/s^2
+        "TU_SM" => 8253622.0                        # s    
     )
 end
 
 """
-    classical_lagrange_point(μ, point) -> Float64
+    classical_lagrange_point(μ, point) -> Vector{Float64}
 
-Return the x-coordinate (in normalised units) of the L1 (point=1) or L2 (point=2)
-Lagrange point for a CR3BP system with mass parameter `μ`.
+Return the position (in normalised units) of the classical Lagrange point
+`point` (1 through 5) for a CR3BP system with mass parameter `μ`.
 
-Uses Newton-Raphson iteration on the collinear equilibrium condition.
+Collinear points L1, L2, L3 are found via Newton-Raphson iteration on the
+collinear equilibrium condition. L4 and L5 are returned analytically.
+Returns a 2-element vector [x, y].
 """
 function classical_lagrange_point(μ::Float64, point::Int)::Vector{Float64}
     tol = 1e-12
@@ -83,6 +89,13 @@ function classical_lagrange_point(μ::Float64, point::Int)::Vector{Float64}
 
 end
 
+"""
+    classical_lagrange_points(μ) -> Matrix{Float64}
+
+Return a 2×5 matrix whose columns are the positions of all five classical
+Lagrange points for a CR3BP system with mass parameter `μ`, in normalised
+units. Column order is L1 through L5.
+"""
 function classical_lagrange_points(μ::Float64)::Matrix{Float64}
     return hcat(
         classical_lagrange_point(μ, 1),
@@ -95,10 +108,13 @@ end
 
 # Helper functions
 """
-    eq_condition_solar_sail(r_AEP, μ) -> Float64, Vector{,Float64}
+    eq_condition_solar_sail(r_AEP, μ) -> SolarSail
 
 Compute the lightness number β required to place an artificial equilibrium
 point at `r_AEP` (normalised units) in the CR3BP with mass parameter `μ`.
+
+Also returns the required sail normal unit vector n. The result is a
+`SolarSail` tuple (β, n).
 """
 function eq_condition_solar_sail(r_AEP::Vector{Float64}, μ::Float64)::SolarSail
     r₁ = copy(r_AEP)
@@ -116,6 +132,16 @@ function eq_condition_solar_sail(r_AEP::Vector{Float64}, μ::Float64)::SolarSail
     return norm(r₁)^2 * norm(∇U) / ((1 - μ) * dot(r̂₁, n)^2), n
 end
 
+"""
+    collinear_AEP(β, μ, point) -> Tuple{Float64, Vector{Float64}}
+
+Find the x-coordinate of the collinear artificial equilibrium point (AEP)
+near classical Lagrange point `point` (1, 2, or 3) for a solar sail with
+lightness number `β` in a CR3BP system with mass parameter `μ`.
+
+Returns a tuple (x_AEP, n) where x_AEP is the normalised x-coordinate
+and n is the sail normal direction (±x̂).
+"""
 function collinear_AEP(β::Float64, μ::Float64, point::Int)::Tuple{Float64,Vector{Float64}}
     function residual(x::Float64)::Float64
         r₁ = abs(x + μ)
@@ -135,7 +161,7 @@ end
     solar_radiation_pressure(S, r) -> Float64
 
 Compute the solar radiation pressure (Pa) at distance `r` (m) from the Sun,
-given solar irradiance `S` (W/m^2) at 1 AU.
+given solar irradiance `S` (W/m²) at 1 AU.
 """
 function solar_radiation_pressure(S::Float64, r::Float64)::Float64
     c_light = 299792458.0
@@ -144,10 +170,15 @@ function solar_radiation_pressure(S::Float64, r::Float64)::Float64
 end
 
 """
-    linear_stability_analysis(μ, r₀, solar_sail=nothing) -> Vector{ComplexF64}
+    linear_stability_analysis(r₀, μ[, solar_sail]) -> Tuple{Vector{ComplexF64}, Matrix{ComplexF64}}
 
-Perform linear stability analysis of an equilibrium point at `r₀` in the CR3BP with mass parameter `μ`. 
-If `solar_sail` is provided, the analysis includes the effect of the solar sail with given lightness number and normal vector.
+Perform linear stability analysis of an equilibrium point at `r₀` in the
+CR3BP with mass parameter `μ`. Returns the eigenvalues and eigenvectors of
+the linearised equations of motion.
+
+If `solar_sail` is provided as a `SolarSail` tuple (β, n), the analysis
+includes the first-order sail acceleration gradient. The state dimension is
+inferred from the length of `r₀` (2D or 3D).
 """
 function linear_stability_analysis(
     r₀::Vector{Float64},
@@ -189,7 +220,16 @@ function linear_stability_analysis(
     return eigenvalues, eigenvectors
 end
 
-function cr3bp!(dr, r, p, t)
+"""
+    cr3bp!(dr, r, p, t)
+
+In-place ODE function for the planar CR3BP equations of motion.
+
+State vector `r` is [x, y, vx, vy] in normalised units. Parameter vector
+`p` must satisfy p[1] = μ (mass parameter). Equations include the Coriolis
+and centrifugal terms of the rotating frame.
+"""
+function cr3bp!(dr::Vector{Float64}, r::Vector{Float64}, p::Vector{Float64}, t::Float64)::Nothing
     x, y, vx, vy = r
     mu = p[1]
     r₁ = sqrt((x + mu)^2 + y^2)
@@ -199,9 +239,21 @@ function cr3bp!(dr, r, p, t)
     dr[2] = vy
     dr[3] = 2 * vy + x - (1 - mu) * (x + mu) / r₁^3 - mu * (x - (1 - mu)) / r₂^3
     dr[4] = -2 * vx + y - (1 - mu) * y / r₁^3 - mu * y / r₂^3
+    return nothing
 end
 
-function cr3bp_ss!(dr, r, p, t)
+"""
+    cr3bp_ss!(dr, r, p, t)
+
+In-place ODE function for the planar CR3BP equations of motion with a solar
+sail acceleraton.
+
+State vector `r` is [x, y, vx, vy] in normalised units. Parameter vector
+`p` must satisfy p[1] = μ (mass parameter), p[2] = β (sail lightness number),
+and p[3] = α (sail cone angle in radians, measured from the Sun-line). The
+sail is assumed to be a flat, perfectly reflecting surface.
+"""
+function cr3bp_ss!(dr::Vector{Float64}, r::Vector{Float64}, p::Vector{Float64}, t::Float64)::Nothing
     x, y, vx, vy = r
     mu = p[1]
     beta = p[2]
@@ -214,8 +266,21 @@ function cr3bp_ss!(dr, r, p, t)
     dr[2] = vy
     dr[3] = 2 * vy + x - (1 - mu) * (x + mu) / r₁^3 - mu * (x - (1 - mu)) / r₂^3 + aₛ * ((x + mu) * cos(alfa) - y * sin(alfa)) / r₁
     dr[4] = -2 * vx + y - (1 - mu) * y / r₁^3 - mu * y / r₂^3 + aₛ * ((y) * cos(alfa) + (x + mu) * sin(alfa)) / r₁
+    return nothing
 end
 
+"""
+    compute_classical_manifold(r₀, μ, λ, v, t_f) -> Tuple{Array{Float64}, Array{Float64}}
+
+Propagate the stable or unstable manifold branch associated with eigenvalue
+`λ` and eigenvector `v` of the monodromy matrix at equilibrium point `r₀`
+in the CR3BP with mass parameter `μ`.
+
+Integration is performed for a normalised time span of `t_f`. For a stable
+manifold (Re(λ) < 0) the trajectory is integrated backwards in time. Two
+branches are returned, corresponding to positive and negative perturbations
+along the eigenvector direction. Each branch is a 4xN array [x; y; vx; vy].
+"""
 function compute_classical_manifold(
     r₀::Vector{Float64}, μ::Float64,
     λ::ComplexF64, v::Vector{ComplexF64},
@@ -235,38 +300,71 @@ function compute_classical_manifold(
     return Array(sol_1), Array(sol_2)
 end
 
-function compute_deltav_mars_insertion(sol, μ, r_MPO, SSP)
+"""
+    compute_deltav_mars_insertion(sol, r_MPO, SSP) -> Tuple{Float64, Vector{Float64}}
+
+Estimate the delta-V (m/s) required for Mars Parking Orbit (MPO) insertion at
+the final state of a manifold trajectory `sol`.
+
+`r_MPO` is the target parking orbit radius in normalised Sun-Mars units.
+`SSP` is the solar system parameter dictionary returned by
+`load_solar_system_parameters`. The rotating-frame velocity at the trajectory
+endpoint is compared against the local circular orbit velocity to compute the
+manoeuvre magnitude. Returns (Δv, v_orbit) where v_orbit is the target
+circular velocity vector in m/s.
+"""
+function compute_deltav_mars_insertion(
+    sol::AbstractMatrix{Float64},
+    r_MPO::Float64,
+    SSP::Dict{String,Any}
+)::Tuple{Float64,Vector{Float64}}
     x_cross = sol[1, end]
     y_cross = sol[2, end]
-    θ_cross = atan(y_cross, x_cross - (1 - μ))
+    θ_cross = atan(y_cross, x_cross - (1 - SSP["μ_SM"]))
 
-    v_circular = sqrt(μ / r_MPO) # Nondimensional circular velocity at Mars parking orbit
+    v_circular = sqrt(SSP["μ_SM"] / r_MPO) # Nondimensional circular velocity at Mars parking orbit
 
     v_orbit = v_circular * [-sin(θ_cross), cos(θ_cross)]
+    # v_orbit_inertial = [v_orbit[1] - y_cross, v_orbit[2] + x_cross]
 
-    Δv = sqrt((sol[3, end] - v_orbit[1])^2 + (sol[4, end] - v_orbit[2])^2) * (SSP["LU_SM"] / SSP["TU_SM"])
-    return Δv, v_orbit
+    v_manifold_inertial = [sol[3, end] - y_cross, sol[4, end] + x_cross - (1 - SSP["μ_SM"])]
+    # v_manifold_inertial = [sol[3, end], sol[4, end]]
+
+    # Δv = sqrt((sol[3, end] - v_orbit[1])^2 + (sol[4, end] - v_orbit[2])^2) * (SSP["LU_SM"] / SSP["TU_SM"])
+    Δv = sqrt((v_manifold_inertial[1] - v_orbit[1])^2 + (v_manifold_inertial[2] - v_orbit[2])^2) * (SSP["LU_SM"] / SSP["TU_SM"])
+    return Δv, v_orbit * (SSP["LU_SM"] / SSP["TU_SM"])
 end
 
-function compute_deltav_earth_departure(sol, μ, SSP)
+"""
+    compute_deltav_earth_departure(sol, SSP) -> Tuple{Float64, Vector{Float64}}
+
+Estimate the delta-V (m/s) required for Earth departure at the final state
+of a manifold trajectory `sol` expressed in the Sun-Mars CR3BP rotating frame.
+
+`SSP` is the solar system parameter dictionary returned by
+`load_solar_system_parameters`. The rotating-frame velocity is converted to
+an inertial frame velocity and compared against the Earth circular orbit
+velocity at the trajectory endpoint. Returns (Δv, v_orbit) where v_orbit is
+the target inertial circular velocity vector in m/s.
+"""
+function compute_deltav_earth_departure(
+    sol::AbstractMatrix{Float64},
+    SSP::Dict{String,Any}
+)::Tuple{Float64,Vector{Float64}}
     x_cross = sol[1, end]
     y_cross = sol[2, end]
     vx_cross = sol[3, end]
     vy_cross = sol[4, end]
 
-    r_cross = sqrt(x_cross^2 + y_cross^2)
     θ_cross = atan(y_cross, x_cross)
 
-    r_Earth = SSP["LU_SE"] / SSP["LU_SM"]
-    v_circular = sqrt((1 - μ) / r_Earth)
-
     # Inertial circular orbit velocity 
-    v_orbit = v_circular * [-sin(θ_cross), cos(θ_cross)]
+    v_orbit = [-sin(θ_cross), cos(θ_cross)] * (SSP["LU_SE"] / SSP["TU_SE"])
 
-    # Convert CR3BP rotating frame velocity to inertial
-    vx_inertial = vx_cross - y_cross
-    vy_inertial = vy_cross + x_cross
+    # Convert SM-CR3BP rotating frame velocity to inertial
+    vx_inertial = (vx_cross - y_cross) * (SSP["LU_SM"] / SSP["TU_SM"])
+    vy_inertial = (vy_cross + x_cross) * (SSP["LU_SM"] / SSP["TU_SM"])
 
-    Δv = sqrt((vx_inertial - v_orbit[1])^2 + (vy_inertial - v_orbit[2])^2) * (SSP["LU_SM"] / SSP["TU_SM"])
+    Δv = sqrt((vx_inertial - v_orbit[1])^2 + (vy_inertial - v_orbit[2])^2)
     return Δv, v_orbit
 end
