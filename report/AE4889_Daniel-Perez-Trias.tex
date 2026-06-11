@@ -167,6 +167,7 @@
         \label{eq:colinear_lagrange}
         x - \frac{1-\mu}{(x+\mu)^2} - \frac{\mu}{(x-1+\mu)^2} = 0
     \end{equation}
+    \vspace{1em}
     \begin{table}[h]
         \centering
         \caption{Dimensionless coordinates $(x_i, y_i, z_i)$ of the Sun--Earth and Sun--Mars
@@ -183,9 +184,12 @@
         \end{tabular}
     \end{table}
     
-    \item[\textbf{1.1b}] For verification purposes, the dimensionless coordinates of the colinear Lagrange points are also extracted from the \href{https://ssd.jpl.nasa.gov/tools/periodic_orbits.html\#/periodic}{\acrfull{jpl} Solar System Dynamics three-body periodic orbits tool}, which are presented in Table \ref{tab:lagrange_points_jpl}.
-    It can be observed that for the represented number of digits, the values are identical, with differences on the order of $10^{-9}$ LU, likely due to shared system parameters between both methods. \textit{(53 words)}
-
+    \item[\textbf{1.1b}] For verification purposes, the dimensionless coordinates of the colinear Lagrange points are 
+    also extracted from the \href{https://ssd.jpl.nasa.gov/tools/periodic_orbits.html\#/periodic}{\acrfull{jpl} Solar System 
+    Dynamics three-body periodic orbits tool}, which are presented in Table \ref{tab:lagrange_points_jpl}.
+    It can be observed that for the represented number of digits, the values are identical, with differences on the 
+    order of $10^{-9}$ LU, likely due to shared system parameters. \textit{(50 words)}
+    \vspace{1em}
     \begin{table}[h]
         \centering
         \caption{Dimensionless $x$ coordinates of the Sun--Earth and Sun--Mars
@@ -201,9 +205,12 @@
         \end{tabular}
     \end{table}
 
-    \item[\textbf{1.2}] From the results it can be observed that the Sun--Mars L$_2$ point is closer to Mars than the Earth L$_2$ is to Earth (in dimensionless units). At L$_2$, the gravitational pulls of both bodies and the 
-    centrifugal force balance. Mars, being less massive, exerts a weaker gravitational pull, so the equilibrium point must sit closer to the planet to compensate, allowing its gravity to 
-    contribute sufficiently to the force balance. \textit{(70 words)}
+    \item[\textbf{1.2}] A greater value of $\mu$ means the primary's gravitational pull weakens ($1-\mu$) while the secondary's strengthens($\mu$).
+    Since L$_2$ sits close to the secondary, this increase is more strongly felt there and must be offset by moving the point further from it. 
+    Increasing this distance has two compensating effects: it reduces the secondary's pull more sharply than the primary's (due to proximity), 
+    and it increases the centrifugal acceleration, which opposes both gravitational contributions. The net result is that a more massive secondary, 
+    as in the Sun--Earth system, pushes L$_2$ further from the planet than in the Sun--Mars case. \textit{(99 words)}
+
 \end{enumerate}
 
 \newpage
@@ -212,12 +219,8 @@
 \addcontentsline{toc}{section}{WP2 Artificial Lagrange points}
 \label{sec:wp2}
 \begin{enumerate}
-    \item[\textbf{2.1a}] The required lightness number, $\beta$, to achieve a shift of $0.0005$ LU in the Lagrange points along the Sun-Planet line is computed using the formula derived from the balance of forces at the artificial equilibrium point (lying at the Sun-Planet line):
-    \begin{equation}
-        \beta = \frac{(x_{\text{AEP}} + \mu)^2}{1 - \mu} \left[ -x_{\text{AEP}} + \frac{1-\mu}{(x_{\text{AEP}}+\mu)^2} + \frac{\mu}{(x_{\text{AEP}}-(1-\mu))^2} \right]
-    \end{equation}
-    which produces the results shown in Table \ref{tab:lightness_number}. 
-
+    \item[\textbf{2.1a}] See Table \ref{tab:lightness_number}. 
+    \vspace{1em}
     \begin{table}[h]
         \centering
         \caption{Required lightness number to achieve the specified shift in the Lagrange points.}
@@ -232,12 +235,15 @@
         \end{tabular}
     \end{table} \par
 
-    With respect to the feasibility of achieving such lightness numbers, previously proposed missions such as \textit{Sunjammer} have targeted lightness numbers on the order of $0.03$, \cite{heiligers2014}, which is 
-    an order of magnitude higher than the required values, indicating that the proposed shifts are indeed feasible with current or near-term solar sail technology. \textit{(51 words)}
-    
-    \item[\textbf{2.1b}] Since the required shift is along the Sun-Planet line, and all the forces (gravitational and centrifugal) at the colinear Lagrange points are aligned along this line, the required sail orientation to achieve the desired shift
-    is also aligned with this line, that is, with the sail normal vector pointing directly away from the Sun, as shown in Table \ref{tab:sail_orientation}. \textit{(58 words)}
-    
+    With respect to feasibility, NASA's \textit{ACS3} (currently in orbit), based on DCB deployable composite boom technology, 
+    has a lightness number $\beta = 0.025$ \cite{wilkie2021ACS3}, an order of magnitude above the required values. This confirms that 
+    the artificial Lagrange point shifts studied are achievable with current solar sail technology. \textit{(47 words)}
+
+    \item[\textbf{2.1b}] Since the required shift is along the Sun--planet line, and all forces at the collinear Lagrange points are 
+    aligned along this axis, the sail orientation needed to achieve the desired shift is likewise along this line. As the spacecraft 
+    moves sunward from L$_2$, the gravitational pulls of both bodies strengthen while the centrifugal acceleration diminishes, requiring 
+    a compensating force directed away from the Sun. This uniquely determines the sail orientation, with the sail normal away from the Sun. \textit{(80 words)}
+    \vspace{1em}
     \begin{table}[h]
         \centering
         \caption{Required sail orientation to achieve the required shift in the Lagrange points.}
@@ -252,8 +258,16 @@
         \end{tabular}
     \end{table}
 
+    \vspace{1em}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=\textwidth]{diagram.pdf}
+        \caption{Schematic of all acceleration vectors acting on the spacecraft in the solar sail augmented CR3BP.}
+        \label{fig:diagram}
+    \end{figure}
+
     \item[\textbf{2.2}] To verify the required lightness numbers calculations the colinear \acrfull{aep} specified in \cite{heiligers2014} is calculated using this work's implementation and compared to the value reported in the reference, 
-    To verify the required lightness numbers calculations the colinear \acrfull{aep} specified in \cite{heiligers2014} is calculated using this work's implementation and compared to the value reported in the reference, 
+    To verify the required lightness numbers calculations the colinear AEP specified in \cite{heiligers2014} is calculated using this work's implementation and compared to the value reported in the reference, 
     the considered case being the Sun--Earth system with a AEP located at $x_{\text{AEP}} = 0.983867$ LU.
     The resulting lightness number is $\beta = 0.0363$, which matches the value reported in \cite{heiligers2014}, confirming the correctness of the implementation. \textit{(64 words)}
 
@@ -265,7 +279,8 @@
     \begin{equation}
         P = \frac{S_{\odot}}{c} \left( \frac{\text{AU}}{r} \right)^2
     \end{equation}
-    The resulting sizes required to achieve the specified shifts in the Lagrange points are shown in Table \ref{tab:sail_area}.
+    The resulting sizes required to achieve the specified shifts in the Lagrange points are shown in Table \ref{tab:sail_area}.\par
+    \vspace{1em}
     \begin{table}[h]
         \centering
         \caption{Required solar-sail side-length to achieve the required shift in the Lagrange points.}
@@ -279,8 +294,9 @@
             \bottomrule
         \end{tabular}
     \end{table}
-    These sizes are within the range of previously proposed solar sails(e.g., \textit{Sunjammer} had a sail area of $38 \times 38$ m$^2$), indicating that the required shifts are indeed feasible with current or near-term solar sail technology.
-    
+    These sizes are at the upper limit of currently feasible solar sails. The maximum sail size of DCB-based designs in CubeSat form factor is 16.5 m, with larger 
+    platforms expected to be capable of deploying sails of up to 22.8 m (\textit{27U HIPERSail}) \cite{wilkie2021ACS3}.
+
     \item[\textbf{2.4}] To analyse the sensitivity of the required lightness number to the shift in the Lagrange point, a range of 21 shifts from $0.0005$ LU to $0.001$ LU is considered, and the corresponding lightness numbers are computed using the formula from Task 2.1a. The results are shown in Figure \ref{fig:beta_sensitivity}. \par 
     \begin{figure}[h]
         \centering
@@ -288,28 +304,28 @@
         \caption{Sensitivity of the required lightness number, $\beta$, to the shift in the Lagrange point, $\Delta x$, for the Sun--Earth and Sun--Mars systems.}
         \label{fig:beta_sensitivity}
     \end{figure}
-    Here it can be observed that the required lightness number follows a quasi-linear trend with
-    respect to the shift in the Lagrange point. As the shift $\Delta x$ increases, the sail is
-    displaced further from the natural L$_2$ location along the Sun-planet line, where the
-    gravitational attractions of the Sun and the planet as well as the centrifugal acceleration
-    all vary smoothly with position. For small displacements, these variations are well
-    approximated as linear functions of $\Delta x$, so the additional solar radiation pressure
-    acceleration required to maintain equilibrium at the new location also scales approximately
-    linearly with the shift, producing the observed trend. \textit{(104 words)}
+    As the equilibrium position moves closer to the planet, the gravitational attraction from both bodies strengthens while the centrifugal acceleration weakens. 
+    To counterbalance these effects, the sail acceleration must increase, requiring a larger lightness number. The required $\beta$ is observed to follow a 
+    near-linear increase with decreasing distance from the Sun for both systems. \textit{(54 words)}
 \end{enumerate}
+
 \newpage
 \phantomsection
 \section*{WP3 Stability of the (artificial) Lagrange points}
 \addcontentsline{toc}{section}{WP3 Stability of the (artificial) Lagrange points}
 \label{sec:wp3}
 
-    \begin{equation}
-        (\mathbf{a_s})_{ij} = \frac{\partial a_{s,i}}{\partial j} = \bm{\zeta} \mathbf{\hat{n}}^T
-    \end{equation}
-    Where:
-    \begin{equation}
-        \bm{\zeta} = \frac{4 \beta (1-\mu) (\mathbf{\hat{n}} \cdot \mathbf{\hat{r}_1})}{r_1^3}\left[\frac{\mathbf{\hat{n}}}{2} - (\mathbf{\hat{n}} \cdot \mathbf{\hat{r}_1})\mathbf{\hat{r}_1}\right]
-    \end{equation}
+\begin{enumerate}
+    \item[\textbf{3.1a}] See Table \ref{tab:eigenvalues}. 
+
+    % \begin{equation}
+    %     (\mathbf{a_s})_{ij} = \frac{\partial a_{s,i}}{\partial j} = \bm{\zeta} \mathbf{\hat{n}}^T
+    % \end{equation}
+    % Where:
+    % \begin{equation}
+    %     \bm{\zeta} = \frac{4 \beta (1-\mu) (\mathbf{\hat{n}} \cdot \mathbf{\hat{r}_1})}{r_1^3}\left[\frac{\mathbf{\hat{n}}}{2} - (\mathbf{\hat{n}} \cdot \mathbf{\hat{r}_1})\mathbf{\hat{r}_1}\right]
+    % \end{equation}
+    \vspace{1em}
     \begin{table}[h]
         \centering
         \caption{Eigenvalues of the classical and artificial Lagrange points.}        
@@ -325,6 +341,33 @@
             \bottomrule
         \end{tabular}
     \end{table}
+
+
+    \item[\textbf{3.1b}] From the linearization of the problem around the equilibrium points it can be observed that all cases have a positive real eigenvalue, 
+    indicating that the nonlinear system is unstable around the equilibrium point \cite{verhulst1996nonlinear}. All eigenvalues take similar values across the 
+    4 cases, with slightly higher magnitudes in the Sun--Mars system, indicating faster local dynamics. The introduction of the solar sail also increases the 
+    magnitude of all eigenvalues slightly, but not enough to have a qualitative effect on the stability of the system. \textit{(82 words)}
+
+    \item[\textbf{3.2}] For verification purposes the eigenvalue calculation tool results are compared against values preseneted in \cite{szebehely1967theory} for a 
+    value of $\mu = 3\times 10^{-6}$. The resulting eigenvalues are shown in Table \ref{tab:eigenvalues_szebehely}.
+
+    \vspace{1em}
+    \begin{table}[h]
+        \centering
+        \caption{Eigenvalues of the classical and artificial Lagrange points.}        
+        \label{tab:eigenvalues}
+        \begin{tabular}{lcccc}
+            \toprule
+            \textbf{Lagrange point} & $\lambda_1$ & $\lambda_2$ & $\lambda_3$ & $\lambda_4$ \\
+            \midrule
+            Sun--Earth Classical  & $-2.484281$ & $-2.056992i$ & $+2.056992i$ & $+2.484281$ \\
+            Sun--Earth Artificial & $-2.673872$ & $-2.174388i$ & $+2.174388i$ & $+2.673872$ \\
+            Sun--Mars Classical   & $-2.496888$ & $-2.064657i$ & $+2.064657i$ & $+2.496888$ \\
+            Sun--Mars Artificial  & $-2.931888$ & $-2.335453i$ & $+2.335453i$ & $+2.931888$ \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{enumerate}
 
 \newpage
 \phantomsection

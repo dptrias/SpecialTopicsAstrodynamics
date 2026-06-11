@@ -63,16 +63,16 @@ begin
 
     fig = Figure()
     ax = Axis(fig[1, 1];
-        xlabel=L"\Delta x \ \mathrm{[LU]}",
+        xlabel=L"x_{i} \ \mathrm{[LU]}",
         ylabel=L"\beta \ \mathrm{[-]}",
-        limits=(Δx, 2 * Δx, nothing, nothing),
+        #limits=(Δx, 2 * Δx, nothing, nothing),
         xticklabelrotation=π / 6
     )
 
-    lines!(ax, collect(Δx_values), β_SE_vals; color=:blue, linewidth=4, label=L"Sun-Earth L$_2$")
-    lines!(ax, collect(Δx_values), β_SM_vals; color=:red, linewidth=4, label=L"Sun-Mars L$_2$")
+    lines!(ax, L2_SE[1] .- collect(Δx_values), β_SE_vals; color=:blue, linewidth=4, label=L"Sun-Earth SL$_2$")
+    lines!(ax, L2_SM[1] .- collect(Δx_values), β_SM_vals; color=:red, linewidth=4, label=L"Sun-Mars SL$_2$")
 
-    axislegend(ax; position=:lt, backgroundcolor=:white)
+    axislegend(ax; position=:rt, backgroundcolor=:white)
 
     save(joinpath(figures_dir, "wp2_beta_sensitivity.png"), fig, px_per_unit=4)
 

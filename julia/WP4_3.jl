@@ -27,11 +27,11 @@ begin
     μ = SSP["μ_SM"]
 
     r_Earth_SM = SSP["LU_SE"] / SSP["LU_SM"]  # Earth-Sun distance in SM normalised units
-    r_MPO_meters = 306666e3 # 182222.0e3 #  # 244444e3  # Mars parking orbit radius in meters
+    r_MPO_meters = 306666e3 # Mars parking orbit radius in meters
     r_MPO = r_MPO_meters / SSP["LU_SM"]  # Mars parking orbit radius in SM normalised units
 
     # Solar sail parameters
-    β = 0.025  # 0.0363
+    β = 0.025
     α_range = range(-90, 90, length=73)  # Cone angles
 
     # Compute classical L2 point
@@ -184,7 +184,7 @@ begin
     # Earth-Mars angle
     θ_Earth = atan(sols_leg_1[idx_leg_1_min][2, end], sols_leg_1[idx_leg_1_min][1, end] + μ)
     @printf("Earth-Mars angle at Earth departure: %.4f°\n", rad2deg(θ_Earth))
-    θ₀ = deg2rad(122.35)
+    θ₀ = deg2rad(122.35) # Earth-Mars angle on January 1, 2030
     t_launch = mod(θ_Earth - θ₀, 2π) / (1 / SSP["TU_SE"] - 1 / SSP["TU_SM"])
     initial_epoch = DateTime(2030, 1, 1)
     launch_epoch = initial_epoch + Second(round(Int, t_launch))
