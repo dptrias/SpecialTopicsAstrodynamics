@@ -27,7 +27,7 @@ begin
     λ_AEP_SE, _ = linear_stability_analysis(L2_SE - [Δx, 0.0], μ_SE, (sail_SE[1], sail_SE[2]))
     λ_AEP_SM, _ = linear_stability_analysis(L2_SM - [Δx, 0.0], μ_SM, (sail_SM[1], sail_SM[2]))
 
-    fmt(z) = @sprintf("%+9.6f%+9.6fim", real(z), imag(z))
+    fmt(z) = @sprintf("%+13.10f%+13.10fim", real(z), imag(z))
 
     println("Eigenvalues (λ) for classical and artificial equilibrium points:\n")
     println("Sun-Earth Classical: [", join(fmt.(λ_classical_SE), ", "), "]")

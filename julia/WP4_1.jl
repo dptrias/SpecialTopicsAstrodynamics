@@ -45,7 +45,7 @@ begin
         5 * 365.256 * 24 * 3600 / SSP["TU_SM"])
 
     # Plotting    
-    fig = Figure(size=(1500, 800))
+    fig = Figure(size=(800, 1500))
     ax1 = Axis(fig[1, 1];
         xlabel=L"x \ \mathrm{[LU]}",
         ylabel=L"y \ \mathrm{[LU]}",
@@ -82,7 +82,7 @@ begin
         [L"Stable Manifold $W_s$", L"Unstable Manifold $W_u$", "Sun", "Mars"];
         position=:lt)
 
-    ax2 = Axis(fig[1, 2];
+    ax2 = Axis(fig[2, 1];
         xlabel=L"x \ \mathrm{[LU]}",
         ylabel=L"y \ \mathrm{[LU]}",
         aspect=DataAspect(),
@@ -143,6 +143,7 @@ begin
         position=:lt, nbanks=2, backgroundcolor=:white)
 
     save(joinpath(figures_dir, "wp41_manifolds.png"), fig, px_per_unit=4)
+    @printf("Plotted invariant manifolds and Lagrange points.\n\n")
 
     @printf("\n=== END OF WP4.1 ===\n\n")
 end

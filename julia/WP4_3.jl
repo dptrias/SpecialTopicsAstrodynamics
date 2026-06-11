@@ -100,8 +100,9 @@ begin
     @printf("   Optimal cone angle: %.1f°\n", α_range[idx_leg_2_min])
     @printf("   Minimum Δv: %.4f m/s\n", Δv_mars[idx_leg_2_min])
     @printf("   Time of flight: %.4f years\n\n", tof_leg_2[idx_leg_2_min])
+    @printf("Total Δv for optimal transfer: %.4f m/s\n\n", Δv_earth[idx_leg_1_min] + Δv_mars[idx_leg_2_min])
 
-    fig = Figure(size=(1500, 800))
+    fig = Figure(size=(800, 1500))
     ax1 = Axis(fig[1, 1];
         xlabel=L"x \ \mathrm{[LU]}",
         ylabel=L"y \ \mathrm{[LU]}",
@@ -132,7 +133,7 @@ begin
 
     axislegend(ax1; position=:lt)
 
-    ax2 = Axis(fig[1, 2];
+    ax2 = Axis(fig[2, 1];
         xlabel=L"x \ \mathrm{[LU]}",
         ylabel=L"y \ \mathrm{[LU]}",
         aspect=DataAspect(),

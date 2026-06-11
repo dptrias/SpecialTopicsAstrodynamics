@@ -22,6 +22,7 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{makecell}
 
 % Colors 
 \usepackage{xcolor}
@@ -168,7 +169,7 @@
         x - \frac{1-\mu}{(x+\mu)^2} - \frac{\mu}{(x-1+\mu)^2} = 0
     \end{equation}
     \vspace{1em}
-    \begin{table}[h]
+    \begin{table}[htbp]
         \centering
         \caption{Dimensionless coordinates $(x_i, y_i, z_i)$ of the Sun--Earth and Sun--Mars
         colinear Lagrange points in their respective synodic reference frames, obtained
@@ -190,7 +191,7 @@
     It can be observed that for the represented number of digits, the values are identical, with differences on the 
     order of $10^{-9}$ LU, likely due to shared system parameters. \textit{(50 words)}
     \vspace{1em}
-    \begin{table}[h]
+    \begin{table}[htbp]
         \centering
         \caption{Dimensionless $x$ coordinates of the Sun--Earth and Sun--Mars
         colinear Lagrange points in their respective synodic reference frames per JPL and their absolute differences w.r.t. the values obtained from the Newton method.}
@@ -221,7 +222,7 @@
 \begin{enumerate}
     \item[\textbf{2.1a}] See Table \ref{tab:lightness_number}. 
     \vspace{1em}
-    \begin{table}[h]
+    \begin{table}[htbp]
         \centering
         \caption{Required lightness number to achieve the specified shift in the Lagrange points.}
         \label{tab:lightness_number}
@@ -244,7 +245,7 @@
     moves sunward from L$_2$, the gravitational pulls of both bodies strengthen while the centrifugal acceleration diminishes, requiring 
     a compensating force directed away from the Sun. This uniquely determines the sail orientation, with the sail normal away from the Sun. \textit{(80 words)}
     \vspace{1em}
-    \begin{table}[h]
+    \begin{table}[htbp]
         \centering
         \caption{Required sail orientation to achieve the required shift in the Lagrange points.}
         \label{tab:sail_orientation}
@@ -259,7 +260,7 @@
     \end{table}
 
     \vspace{1em}
-    \begin{figure}[h]
+    \begin{figure}[htbp]
         \centering
         \includegraphics[width=\textwidth]{diagram.pdf}
         \caption{Schematic of all acceleration vectors acting on the spacecraft in the solar sail augmented CR3BP.}
@@ -275,19 +276,19 @@
     \begin{equation}
         \beta \frac{\mu_\odot}{r^2} = 2 P \frac{A}{m} \rightarrow A = \frac{\beta \mu_\odot m}{2 P r^2}
     \end{equation}
-    where $P$ is the solar radiation pressure at the location of the sail, which can be calculated from the solar constant, $S_{\odot}$ \cite{kopp2011}, and the speed of light, $c$, as follows:
+    where $m$ is the mass of the spacecraft, $\mu_\odot$ is the gravitational parameter of the Sun ($G M_\odot$), $r$ is the distance from the Sun, and $P$ is the solar radiation pressure at the location of the sail, which can be calculated from the solar constant, $S_{\odot}$ \cite{kopp2011}, and the speed of light, $c$, as follows:
     \begin{equation}
         P = \frac{S_{\odot}}{c} \left( \frac{\text{AU}}{r} \right)^2
     \end{equation}
     The resulting sizes required to achieve the specified shifts in the Lagrange points are shown in Table \ref{tab:sail_area}.\par
     \vspace{1em}
-    \begin{table}[h]
+    \begin{table}[htbp]
         \centering
-        \caption{Required solar-sail side-length to achieve the required shift in the Lagrange points.}
+        \caption{Required solar sail side-length to achieve the required shift in the Lagrange points.}
         \label{tab:sail_area}
         \begin{tabular}{lccc}
             \toprule
-            \textbf{Lagrange point} & Required solar-sail side-length [m] \\
+            \textbf{Lagrange point} & Required solar sail side-length [m] \\
             \midrule
             Sun--Earth L$_2$ & $17.6459$\\
             Sun--Mars L$_2$  & $18.1809$\\
@@ -298,7 +299,7 @@
     platforms expected to be capable of deploying sails of up to 22.8 m (\textit{27U HIPERSail}) \cite{wilkie2021ACS3}.
 
     \item[\textbf{2.4}] To analyse the sensitivity of the required lightness number to the shift in the Lagrange point, a range of 21 shifts from $0.0005$ LU to $0.001$ LU is considered, and the corresponding lightness numbers are computed using the formula from Task 2.1a. The results are shown in Figure \ref{fig:beta_sensitivity}. \par 
-    \begin{figure}[h]
+    \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.75\textwidth]{wp2_beta_sensitivity.png}
         \caption{Sensitivity of the required lightness number, $\beta$, to the shift in the Lagrange point, $\Delta x$, for the Sun--Earth and Sun--Mars systems.}
@@ -326,7 +327,7 @@
     %     \bm{\zeta} = \frac{4 \beta (1-\mu) (\mathbf{\hat{n}} \cdot \mathbf{\hat{r}_1})}{r_1^3}\left[\frac{\mathbf{\hat{n}}}{2} - (\mathbf{\hat{n}} \cdot \mathbf{\hat{r}_1})\mathbf{\hat{r}_1}\right]
     % \end{equation}
     \vspace{1em}
-    \begin{table}[h]
+    \begin{table}[htbp]
         \centering
         \caption{Eigenvalues of the classical and artificial Lagrange points.}        
         \label{tab:eigenvalues}
@@ -352,21 +353,20 @@
     value of $\mu = 3\times 10^{-6}$. The resulting eigenvalues are shown in Table \ref{tab:eigenvalues_szebehely}.
 
     \vspace{1em}
-    \begin{table}[h]
+    \begin{table}[htbp]
         \centering
-        \caption{Eigenvalues of the classical and artificial Lagrange points.}        
-        \label{tab:eigenvalues}
+        \caption{Verification of the eigenvalue calculation tool for $\mu = 3\times 10^{-6}$.}   
+        \label{tab:eigenvalues_szebehely}
         \begin{tabular}{lcccc}
             \toprule
-            \textbf{Lagrange point} & $\lambda_1$ & $\lambda_2$ & $\lambda_3$ & $\lambda_4$ \\
+            \textbf{Source} & $\lambda_1$ & $\lambda_2$ & $\lambda_3$ & $\lambda_4$ \\
             \midrule
-            Sun--Earth Classical  & $-2.484281$ & $-2.056992i$ & $+2.056992i$ & $+2.484281$ \\
-            Sun--Earth Artificial & $-2.673872$ & $-2.174388i$ & $+2.174388i$ & $+2.673872$ \\
-            Sun--Mars Classical   & $-2.496888$ & $-2.064657i$ & $+2.064657i$ & $+2.496888$ \\
-            Sun--Mars Artificial  & $-2.931888$ & $-2.335453i$ & $+2.335453i$ & $+2.931888$ \\
+            This work & $-2.4844225586$ & $-2.0570784929i$ & $+2.0570784929i$ & $+2.4844225586$ \\
+            \textcite{szebehely1967theory} & $-2.4844225586$ & $-2.0570784929i$ & $+2.0570784929i$ & $-2.4844225586$ \\
             \bottomrule
         \end{tabular}
     \end{table}
+
 \end{enumerate}
 
 \newpage
@@ -374,9 +374,94 @@
 \section*{WP4 Invariant manifolds and application to Mars exploration mission}
 \addcontentsline{toc}{section}{WP4 Invariant manifolds and application to Mars exploration mission}
 \label{sec:wp4}
-\lipsum[4]
 
-% \begin{figure}[H]
+\begin{enumerate}
+    \item[\textbf{4.1}] See Figure \ref{fig:classical-manifolds}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.75\textwidth]{wp41_manifolds.png}
+        \caption{Stable($W^s$) and unstable($W^u$) invariant manifolds of the classical L$_2$ point in the Sun--Mars system.}
+        \label{fig:classical-manifolds}
+    \end{figure}
+
+    \item[\textbf{4.2a}] The unstable manifold departing L$_2$ intersects the \acrfull{mpo}, enabling a propulsion-free transfer. However, 
+    the manifolds do not intersect Earth's orbit, as it lies on a different energy level, meaning propulsion is required for the Earth to Sun--Mars L$_2$ leg. \textit{(40 words)}
+
+    \item[\textbf{4.2b}] See Table \ref{tab:deltaV-classical} and Figure \ref{fig:leg2-classical}.
+    \vspace{1em}
+    \begin{table}[htbp]
+        \centering
+        \caption{$\Delta V$s required to establish a natural transfer between Earth and Mars.}   
+        \label{tab:deltaV-classical}
+        \begin{tabular}{ccc}
+            \toprule
+            $\Delta V_\text{E}$ [m/s] & $\Delta V_\text{M}$ [m/s] & $\Delta V_\text{TOT}$ [m/s] \\
+            \midrule
+            -- & 294.0023 & 294.0023 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.75\textwidth]{wp42_mars_transfer.png}
+        \caption{Close up of the natural transfer from L$_2$ to the MPO.}
+        \label{fig:leg2-classical}
+    \end{figure}
+
+    \item[\textbf{4.3}] See Table \ref{tab:solar sail-transfer} and Figures \ref{fig:deltaV-ss} and \ref{fig:optimal-transfer}.
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.75\textwidth]{wp43_deltav_vs_alpha.png}
+        \caption{$\Delta V$s of the solar sail transfer as a function of the cone angle.}
+        \label{fig:deltaV-ss}
+    \end{figure}
+    \vspace{1em}
+    \begin{table}[htbp]
+        \centering
+        \caption{Details of the solar sail Earth--Mars transfer with the smallest total $\Delta V$, $\Delta V_\text{TOT}$.}
+        \label{tab:solar sail-transfer}
+        \begin{tabular}{ccccccc}
+            \toprule
+            \makecell{Leg 1 \\ optimal \\ cone \\ angle [$^\circ$]} &
+            \makecell{Leg 2 \\ optimal \\ cone \\ angle [$^\circ$]} &
+            $\Delta V_\text{E}$ [m/s] &
+            $\Delta V_\text{M}$ [m/s] &
+            $\Delta V_\text{TOT}$ [m/s] &
+            \makecell{Time of \\ Flight Leg 1 \\ \ [Earth years]} &
+            \makecell{Time of \\ Flight Leg 2 \\ \ [Earth years]} \\
+            \midrule
+            42.5 & -67.5 & 611.6762 & 276.6996 & 888.3757 & 4.0092 & 0.5521 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.75\textwidth]{wp43_optimal_transfers.png}
+        \caption{Optimal transfer trajectory from Earth to the MPO via the Sun--Mars L$_2$ point using a solar sail.}
+        \label{fig:optimal-transfer}
+    \end{figure}
+
+    \item[\textbf{4.4}] 
+
+    \item[\textbf{4.5}] The earliest possible departure date for the optimal transfer is determined by the synodic mean anomaly of the Earth and Mars as follows:
+    \begin{equation*}
+        t_{\text{dep}} = \frac{\mod(\theta_\text{dep} - \theta_0, 2\pi)}{n_E - n_M} + t_0
+    \end{equation*}
+    The earliest departure date is found to be on the \textbf{25th of May, 2030}.
+    
+    \item[\textbf{4.6}] The results demonstrate that solar sail missions from Earth to Mars with minimized $\Delta V$ are feasible. However, several limitations
+     constrain practical applicability. The assumed 100 kg spacecraft is already at the boundary of current solar sail technology, and the true useful payload 
+     is further reduced by the mass of sail support systems, attitude control hardware, propulsion systems for the required $\Delta V$ maneuvers, and Mars
+      descent mechanisms, none of which have been accounted for in this study. This makes the small payload the primary limiting factor for the exploitation of 
+      this technology in the near term.
+    \par
+    A viable niche may nonetheless emerge in the long term. In the short term, Mars settlement will rely primarily on in-situ resource utilization 
+    \cite{zamani2024feasibility}, but once sustained settlements with predictable long-term supply demands are established, low-cost propellant-efficient 
+    delivery architectures of this kind could play a meaningful supporting role. \textit{(144 words)}
+
+\end{enumerate}
+
+% \begin{figure}[htbp]
 %     \centering
 %     % \includegraphics[width=0.75\textwidth]{figures/example.pdf}
 %     \rule{0.75\textwidth}{4cm}  % placeholder; replace with \includegraphics
@@ -385,7 +470,7 @@
 %     \label{fig:example}
 % \end{figure}
 % 
-% \begin{table}[H]
+% \begin{table}[htbp]
 %     \centering
 %     \caption{Summary of simulation parameters.}
 %     \label{tab:example}
@@ -401,6 +486,7 @@
 % \end{table}
 
 % REFERENCES
+\clearpage
 \newpage
 \printbibliography[heading=bibintoc, title={References}]
 

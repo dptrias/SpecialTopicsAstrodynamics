@@ -325,12 +325,9 @@ function compute_deltav_mars_insertion(
     v_circular = sqrt(SSP["μ_SM"] / r_MPO) # Nondimensional circular velocity at Mars parking orbit
 
     v_orbit = v_circular * [-sin(θ_cross), cos(θ_cross)]
-    # v_orbit_inertial = [v_orbit[1] - y_cross, v_orbit[2] + x_cross]
 
     v_manifold_inertial = [sol[3, end] - y_cross, sol[4, end] + x_cross - (1 - SSP["μ_SM"])]
-    # v_manifold_inertial = [sol[3, end], sol[4, end]]
 
-    # Δv = sqrt((sol[3, end] - v_orbit[1])^2 + (sol[4, end] - v_orbit[2])^2) * (SSP["LU_SM"] / SSP["TU_SM"])
     Δv = sqrt((v_manifold_inertial[1] - v_orbit[1])^2 + (v_manifold_inertial[2] - v_orbit[2])^2) * (SSP["LU_SM"] / SSP["TU_SM"])
     return Δv, v_orbit * (SSP["LU_SM"] / SSP["TU_SM"])
 end
