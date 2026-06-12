@@ -24,7 +24,7 @@
 \usepackage{multirow}
 \usepackage{makecell}
 
-% Colors 
+% Colours 
 \usepackage{xcolor}
 \usepackage{xkcdcolors}
 
@@ -111,6 +111,7 @@
                 \item Andreu Craus Vidal
                 \item Rodrigo Duarte Soares
                 \item Ismael Gallo López
+                \item Cala González Penagos
             \end{itemize}
         \end{minipage}
     \par}
@@ -173,11 +174,11 @@
         \centering
         \caption{Dimensionless coordinates $(x_i, y_i, z_i)$ of the Sun--Earth and Sun--Mars
         colinear Lagrange points in their respective synodic reference frames, obtained
-        from the solution of the circular restricted three-body problem using a Newton method.}
+        from the solution of the CR3BP using a Newton method.}
         \label{tab:lagrange_points}
         \begin{tabular}{lccc}
             \toprule
-            \textbf{Lagrange point} & $x_i$ [LU] & $y_i$ [LU] & $z_i$ [LU]\\
+            \textbf{Lagrange point} & $\bm{x_i}$ [LU] & $\bm{y_i}$ [LU] & $\bm{z_i}$ [LU]\\
             \midrule
             Sun--Earth L$_2$ & 1.01009044 & 0 & 0 \\
             Sun--Mars L$_2$  & 1.00476311 & 0 & 0 \\
@@ -198,7 +199,7 @@
         \label{tab:lagrange_points_jpl}
         \begin{tabular}{lcc}
             \toprule
-            \textbf{Lagrange point} & $x_i$ [LU]& $\Delta x_i$ [LU] \\
+            \textbf{Lagrange point} & $\bm{x_i}$ [LU]& $\bm{\Delta x_i}$ [LU] \\
             \midrule
             Sun--Earth L$_2$ & $1.01009044$ & $4.21585256 \times 10^{-9}$ \\
             Sun--Mars L$_2$  & $1.00476311$ & $3.32491457 \times 10^{-9}$ \\
@@ -206,11 +207,11 @@
         \end{tabular}
     \end{table}
 
-    \item[\textbf{1.2}] A greater value of $\mu$ means the primary's gravitational pull weakens ($1-\mu$) while the secondary's strengthens($\mu$).
-    Since L$_2$ sits close to the secondary, this increase is more strongly felt there and must be offset by moving the point further from it. 
+    \item[\textbf{1.2}] A greater value of $\mu$ means the primary's gravitational pull weakens ($1-\mu$) while the secondary's strengthens ($\mu$).
+    Since L$_2$ sits close to the secondary, this increase is more strongly felt there and must be offset by moving the equilibrium point further from it. 
     Increasing this distance has two compensating effects: it reduces the secondary's pull more sharply than the primary's (due to proximity), 
     and it increases the centrifugal acceleration, which opposes both gravitational contributions. The net result is that a more massive secondary, 
-    as in the Sun--Earth system, pushes L$_2$ further from the planet than in the Sun--Mars case. \textit{(99 words)}
+    as in the Sun--Earth system, pushes L$_2$ further from the planet than in the Sun--Mars case. \textit{(100 words)}
 
 \end{enumerate}
 
@@ -226,9 +227,11 @@
         \centering
         \caption{Required lightness number to achieve the specified shift in the Lagrange points.}
         \label{tab:lightness_number}
-        \begin{tabular}{lp{5cm}c}
+        \begin{tabular}{lcc}
             \toprule
-            \textbf{Lagrange point} & \textbf{Shift in Lagrange point along the Sun-Planet line} & \textbf{Required lightness number,} $\beta$ \\
+            \textbf{Lagrange point} &
+            \makecell{\textbf{Shift in Lagrange} \\ \textbf{point along the} \\ \textbf{Sun--Planet line}} [LU]&
+            \makecell{\textbf{Required lightness} \\ \textbf{number,} $\bm{\beta}$} [--]\\
             \midrule
             Sun--Earth L$_2$ & $0.0005$ & $4.76757628 \times 10^{-3}$ \\
             Sun--Mars L$_2$  & $0.0005$ & $5.06104189 \times 10^{-3}$ \\
@@ -251,7 +254,7 @@
         \label{tab:sail_orientation}
         \begin{tabular}{lccc}
             \toprule
-            \textbf{Lagrange point} & $n_{x,i}$ & $n_{y,i}$ & $n_{z,i}$ \\
+            \textbf{Lagrange point} & $\bm{n_{x,i}}$ & $\bm{n_{y,i}}$ & $\bm{n_{z,i}}$ \\
             \midrule
             Sun--Earth L$_2$ & $1$ & $0$ & $0$ \\
             Sun--Mars L$_2$  & $1$ & $0$ & $0$ \\
@@ -267,28 +270,25 @@
         \label{fig:diagram}
     \end{figure}
 
-    \item[\textbf{2.2}] To verify the required lightness numbers calculations the colinear \acrfull{aep} specified in \cite{heiligers2014} is calculated using this work's implementation and compared to the value reported in the reference, 
-    To verify the required lightness numbers calculations the colinear AEP specified in \cite{heiligers2014} is calculated using this work's implementation and compared to the value reported in the reference, 
-    the considered case being the Sun--Earth system with a AEP located at $x_{\text{AEP}} = 0.983867$ LU.
-    The resulting lightness number is $\beta = 0.0363$, which matches the value reported in \cite{heiligers2014}, confirming the correctness of the implementation. \textit{(64 words)}
+    \item[\textbf{2.2}] To verify the required lightness numbers calculations the colinear \acrfull{aep} is calculated using this work's implementation and compared to the value reported in \cite{heiligers2014} for  
+    the Sun--Earth system with a AEP located at $x_{\text{AEP}} = 0.983867$ LU.
+    The resulting lightness number is $\beta = 0.0363$, which matches the value reported in \cite{heiligers2014}, confirming the correctness of the implementation. \textit{(61 words)}
 
-    \item[\textbf{2.3}] The required area of the solar sail is derived from the definition of the lightness number:
+    \item[\textbf{2.3}] The required area of the solar sail is derived from the definition of the lightness number and the expression for the solar radiation pressure:
     \begin{equation}
-        \beta \frac{\mu_\odot}{r^2} = 2 P \frac{A}{m} \rightarrow A = \frac{\beta \mu_\odot m}{2 P r^2}
+        A = \frac{\beta \mu_\odot m}{2 r^2} \frac{c}{S_{\odot}} \left( \frac{r}{\text{AU}} \right)^2
     \end{equation}
-    where $m$ is the mass of the spacecraft, $\mu_\odot$ is the gravitational parameter of the Sun ($G M_\odot$), $r$ is the distance from the Sun, and $P$ is the solar radiation pressure at the location of the sail, which can be calculated from the solar constant, $S_{\odot}$ \cite{kopp2011}, and the speed of light, $c$, as follows:
-    \begin{equation}
-        P = \frac{S_{\odot}}{c} \left( \frac{\text{AU}}{r} \right)^2
-    \end{equation}
+    where the value of the solar constant, $S_{\odot}$, is taken from \cite{kopp2011}.
+    
     The resulting sizes required to achieve the specified shifts in the Lagrange points are shown in Table \ref{tab:sail_area}.\par
     \vspace{1em}
     \begin{table}[htbp]
         \centering
         \caption{Required solar sail side-length to achieve the required shift in the Lagrange points.}
         \label{tab:sail_area}
-        \begin{tabular}{lccc}
+        \begin{tabular}{lc}
             \toprule
-            \textbf{Lagrange point} & Required solar sail side-length [m] \\
+            \textbf{Lagrange point} & \makecell{\textbf{Required solar} \\ \textbf{sail side-length}} [m] \\
             \midrule
             Sun--Earth L$_2$ & $17.6459$\\
             Sun--Mars L$_2$  & $18.1809$\\
@@ -298,7 +298,7 @@
     These sizes are at the upper limit of currently feasible solar sails. The maximum sail size of DCB-based designs in CubeSat form factor is 16.5 m, with larger 
     platforms expected to be capable of deploying sails of up to 22.8 m (\textit{27U HIPERSail}) \cite{wilkie2021ACS3}.
 
-    \item[\textbf{2.4}] To analyse the sensitivity of the required lightness number to the shift in the Lagrange point, a range of 21 shifts from $0.0005$ LU to $0.001$ LU is considered, and the corresponding lightness numbers are computed using the formula from Task 2.1a. The results are shown in Figure \ref{fig:beta_sensitivity}. \par 
+    \item[\textbf{2.4}] To analyse the sensitivity of the required lightness number to the shift in the Lagrange point, a range of 21 shifts from $0.0005$ LU to $0.001$ LU is considered, and the corresponding lightness numbers are computed using the expression from Task 2.1a. The results are shown in Figure \ref{fig:beta_sensitivity}. \par 
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.75\textwidth]{wp2_beta_sensitivity.png}
@@ -317,7 +317,7 @@
 \label{sec:wp3}
 
 \begin{enumerate}
-    \item[\textbf{3.1a}] See Table \ref{tab:eigenvalues}. 
+    \item[\textbf{3.1a}] For the linearization constant sail orientation in the rotating frame is assumed, i.e. $\mathbf{\hat{n}} = \text{constant}$. The eigenvalues at the equilibrium points are given in Table \ref{tab:eigenvalues}. 
 
     % \begin{equation}
     %     (\mathbf{a_s})_{ij} = \frac{\partial a_{s,i}}{\partial j} = \bm{\zeta} \mathbf{\hat{n}}^T
@@ -333,7 +333,7 @@
         \label{tab:eigenvalues}
         \begin{tabular}{lcccc}
             \toprule
-            \textbf{Lagrange point} & $\lambda_1$ & $\lambda_2$ & $\lambda_3$ & $\lambda_4$ \\
+            \textbf{Lagrange point} & $\bm{\lambda_1}$ & $\bm{\lambda_2}$ & $\bm{\lambda_3}$ & $\bm{\lambda_4}$ \\
             \midrule
             Sun--Earth Classical  & $-2.484281$ & $-2.056992i$ & $+2.056992i$ & $+2.484281$ \\
             Sun--Earth Artificial & $-2.673872$ & $-2.174388i$ & $+2.174388i$ & $+2.673872$ \\
@@ -359,7 +359,7 @@
         \label{tab:eigenvalues_szebehely}
         \begin{tabular}{lcccc}
             \toprule
-            \textbf{Source} & $\lambda_1$ & $\lambda_2$ & $\lambda_3$ & $\lambda_4$ \\
+            \textbf{Source} & $\bm{\lambda_1}$ & $\bm{\lambda_2}$ & $\bm{\lambda_3}$ & $\bm{\lambda_4}$ \\
             \midrule
             This work & $-2.4844225586$ & $-2.0570784929i$ & $+2.0570784929i$ & $+2.4844225586$ \\
             \textcite{szebehely1967theory} & $-2.4844225586$ & $-2.0570784929i$ & $+2.0570784929i$ & $-2.4844225586$ \\
@@ -395,9 +395,9 @@
         \label{tab:deltaV-classical}
         \begin{tabular}{ccc}
             \toprule
-            $\Delta V_\text{E}$ [m/s] & $\Delta V_\text{M}$ [m/s] & $\Delta V_\text{TOT}$ [m/s] \\
+            $\bm{\Delta V_\text{E}}$ [m/s] & $\bm{\Delta V_\text{M}}$ [m/s] & $\bm{\Delta V_\text{TO}T}$ [m/s] \\
             \midrule
-            -- & 294.0023 & 294.0023 \\
+            -- & 294.0023 & -- \\
             \bottomrule
         \end{tabular}
     \end{table}
@@ -422,13 +422,13 @@
         \label{tab:solar sail-transfer}
         \begin{tabular}{ccccccc}
             \toprule
-            \makecell{Leg 1 \\ optimal \\ cone \\ angle [$^\circ$]} &
-            \makecell{Leg 2 \\ optimal \\ cone \\ angle [$^\circ$]} &
-            $\Delta V_\text{E}$ [m/s] &
-            $\Delta V_\text{M}$ [m/s] &
-            $\Delta V_\text{TOT}$ [m/s] &
-            \makecell{Time of \\ Flight Leg 1 \\ \ [Earth years]} &
-            \makecell{Time of \\ Flight Leg 2 \\ \ [Earth years]} \\
+            \makecell{\textbf{Leg 1} \\ \textbf{optimal} \\ \textbf{cone} \\ \textbf{angle} [$^\circ$]} &
+            \makecell{\textbf{Leg 2} \\ \textbf{optimal} \\ \textbf{cone} \\ \textbf{angle} [$^\circ$]} &
+            $\bm{\Delta V_\text{E}}$ [m/s] &
+            $\bm{\Delta V_\text{M}}$ [m/s] &
+            $\bm{\Delta V_\text{TOT}}$ [m/s] &
+            \makecell{\textbf{Time of} \\ \textbf{Flight Leg 1} \\ \ [Earth years]} &
+            \makecell{\textbf{Time of} \\ \textbf{Flight Leg 2} \\ \ [Earth years]} \\
             \midrule
             42.5 & -67.5 & 611.6762 & 276.6996 & 888.3757 & 4.0092 & 0.5521 \\
             \bottomrule
@@ -441,20 +441,31 @@
         \label{fig:optimal-transfer}
     \end{figure}
 
-    \item[\textbf{4.4}] 
+    \item[\textbf{4.4}] Comparing the results presented here with those obtained by Cala González Penagos (student \#5484944), it can be observed that González's 
+    solution achieves a lower $\Delta V$ by approximately 100 m/s, at the expense of an increase in time of flight of about one year. This difference arises 
+    mainly in Leg 1. González's  trajectory spans approximately 270$^\circ$ around the Sun (in the rotating frame), whereas the trajectory obtained in this work 
+    covers about 180$^\circ$.  The longer heliocentric path suggests a more gradual energy exchange with the solar sailing dynamics, reducing $\Delta V$ but 
+    increasing flight time.
+
+    This difference is likely linked to the chosen arrival point as González targets the L$_1$ point, while this work targets L$_2$. The different dynamical 
+    environments at these points lead to distinct optimal transfer geometries, with the arrival condition appearing to be the main driver of the observed trade-off, as
+    the lightness numbers differ only marginally (0.005).
+
+    In Leg 2, an L$_1$ departure yields both lower $\Delta V$ and a time of flight approximately four times shorter than the L$_2$ case. However, this improvement 
+    is insufficient to offset the substantially longer duration of Leg 1, resulting in a higher overall time of flight for González's trajectory. \textit{(200 words)}
 
     \item[\textbf{4.5}] The earliest possible departure date for the optimal transfer is determined by the synodic mean anomaly of the Earth and Mars as follows:
-    \begin{equation*}
+    \begin{equation}
         t_{\text{dep}} = \frac{\mod(\theta_\text{dep} - \theta_0, 2\pi)}{n_E - n_M} + t_0
-    \end{equation*}
+    \end{equation}
     The earliest departure date is found to be on the \textbf{25th of May, 2030}.
     
     \item[\textbf{4.6}] The results demonstrate that solar sail missions from Earth to Mars with minimized $\Delta V$ are feasible. However, several limitations
-     constrain practical applicability. The assumed 100 kg spacecraft is already at the boundary of current solar sail technology, and the true useful payload 
-     is further reduced by the mass of sail support systems, attitude control hardware, propulsion systems for the required $\Delta V$ maneuvers, and Mars
-      descent mechanisms, none of which have been accounted for in this study. This makes the small payload the primary limiting factor for the exploitation of 
-      this technology in the near term.
-    \par
+    constrain practical applicability. The assumed 100 kg spacecraft is already at the boundary of current solar sail technology, and the true useful payload 
+    is further reduced by the mass of sail support systems, attitude control hardware, propulsion systems for the required $\Delta V$ maneuvers, and Mars
+    descent mechanisms, none of which have been accounted for in this study. This makes the small payload the primary limiting factor for the exploitation of 
+    this technology in the near term.
+    
     A viable niche may nonetheless emerge in the long term. In the short term, Mars settlement will rely primarily on in-situ resource utilization 
     \cite{zamani2024feasibility}, but once sustained settlements with predictable long-term supply demands are established, low-cost propellant-efficient 
     delivery architectures of this kind could play a meaningful supporting role. \textit{(144 words)}
@@ -490,16 +501,148 @@
 \newpage
 \printbibliography[heading=bibintoc, title={References}]
 
-%  APPENDICES
-% \newpage
-% \appendix
-% 
-% \section{Appendix Title}
-% \label{app:A}
-% 
-% Include supplementary derivations, raw data tables, or code listings here.
-% Appendices are labelled A, B, C, etc., automatically.
-% 
-% \lipsum[7]
+\newpage
+\appendix
+
+\section{AI Statement}
+\label{app:ai-statement}
+
+
+AI was used throughout this work for assistance with \textit{Julia} plotting.
+%
+%\texttt{
+%Give me a .bib citation for this
+%
+%Citation (APA)
+%Farrés, A., Heiligers, J., & Miguel, N. (2019). Road map to L4/L5 with a solar sail. Aerospace Science and
+%Technology, 95, Article 105458. https://doi.org/10.1016/j.ast.2019.105458
+%
+%28 May
+%
+%Check SKILL.md for any relevant guidance
+%Check SKILL.md for any relevant guidance
+%Here is the .bib entry:
+%
+%bibtex
+%@article{farres2019roadmap,
+%  author    = {Farr\'{e}s, Ariadna and Heiligers, Jeannette and Miguel, Narcís},
+%  title     = {Road map to {L4/L5} with a solar sail},
+%  journal   = {Aerospace Science and Technology},
+%  year      = {2019},
+%  volume    = {95},
+%  pages     = {105458},
+%  doi       = {10.1016/j.ast.2019.105458}
+%}
+%A couple of notes: the accented characters in the author names use LaTeX encoding so they render correctly across BibTeX engines, and the {L4/L5} braces preserve the capitalisation in the title.
+%
+%[Theory of Orbit | ScienceDirect](https://www.sciencedirect.com/book/monograph/9780123957320/theory-of-orbit)
+%
+%28 May
+%
+%Searched the web
+%Searched the web
+%Here is the .bib entry:
+%
+%bibtex
+%@book{szebehely1967theory,
+%  author    = {Szebehely, Victor G.},
+%  title     = {Theory of Orbits: The Restricted Problem of Three Bodies},
+%  publisher = {Academic Press},
+%  address   = {New York},
+%  year      = {1967},
+%  isbn      = {9780123957320}
+%}
+%The ISBN here corresponds to the ScienceDirect edition you linked. If you want to cite the original 1967 hardback directly, you can swap it for 9780126806502 or just drop the isbn field entirely, which is common practice for classic books cited in astrodynamics literature.
+%}
+
+\begin{lstlisting}
+How to do a 1x2 figure in julia
+
+27 May
+In Makie (assuming you're using that), a 1x2 figure is straightforward:
+
+julia
+fig = Figure(size = (1200, 500))
+
+ax1 = Axis(fig[1, 1], xlabel = "x", ylabel = "y", title = "Left")
+ax2 = Axis(fig[1, 2], xlabel = "x", ylabel = "y", title = "Right")
+
+# plot into each axis
+lines!(ax1, x, y1)
+lines!(ax2, x, y2)
+
+fig
+The fig[row, col] indexing is all you need. A few useful extras:
+
+Equal column widths are the default, but you can control spacing:
+
+julia
+colgap!(fig.layout, 20)  # gap in pixels between columns
+Shared axis limits:
+
+julia
+linkxaxes!(ax1, ax2)
+linkyaxes!(ax1, ax2)
+Overall figure padding:
+
+julia
+fig = Figure(size = (1200, 500), figure_padding = 10)
+Saving:
+
+julia
+save("output.pdf", fig)
+That's the core of it. The fig[1, 1] and fig[1, 2] grid positions handle the layout automatically.
+
+im now using Inf for a variable im plotting, how do i filter them for plotting
+
+27 May
+A simple boolean mask:
+
+julia
+valid = isfinite.(y_values_with_inf)
+Then plot with:
+
+julia
+lines!(ax, x_values[valid], y_values_with_inf[valid])
+
+how to make a legend box not transparent
+
+27 May
+In Makie:
+
+julia
+axislegend(ax, backgroundcolor = :white)
+Or if you are using a figure-level legend:
+
+julia
+Legend(fig[1, 2], ax, backgroundcolor = :white)
+You can also control the border:
+
+julia
+axislegend(ax, backgroundcolor = :white, framecolor = :black, framewidth = 1)
+have it cover the axis ticks
+
+27 May
+Set a high tellwidth/tellheight and use framevisible plus depth ordering... actually in Makie the simplest way is just to place the legend manually with a high z-order isn't directly exposed, but you can control it with:
+
+julia
+axislegend(ax, backgroundcolor = :white, framecolor = :black,
+           framewidth = 1, margin = (10, 10, 10, 10))
+If it is still going behind the ticks, switch to a Legend placed inside the axis using halign and valign:
+
+julia
+Legend(fig[1, 1], ax, backgroundcolor = :white, framecolor = :black,
+       framewidth = 1, tellwidth = false, tellheight = false,
+       halign = :right, valign = :top, margin = (10, 10, 10, 10))
+The tellwidth = false, tellheight = false is the key part, it lets the legend float inside the axis panel rather than being pushed to a grid cell, and it will naturally render on top of the axis content including ticks.
+
+simpler
+
+27 May
+julia
+axislegend(ax, position = :rt, backgroundcolor = :white)
+:rt is right-top. Other options are :lt, :lb, :rb for the four corners.
+
+\end{lstlisting}
 
 \end{document}

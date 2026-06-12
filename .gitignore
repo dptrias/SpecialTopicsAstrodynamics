@@ -9,7 +9,8 @@
 *.fls
 *.glg
 *.glo
-*.gls*
+*.gls
+*.glsdefs
 *.ist
 report/AE4889_Daniel-Perez-Trias.log
 *.nlo
