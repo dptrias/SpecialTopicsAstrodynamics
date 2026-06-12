@@ -40,15 +40,13 @@ begin
     @printf("Beta for Sun-Mars  L2: %.8e\n", β_SM)
 
     # Physical constants and system scales
-    μ_S = 132712e15          # m^3/s^2  (solar gravitational parameter)
+    μ_S = SSP["μ_S"]         # m^3/s^2  (solar gravitational parameter)
     m_s = 100.0              # kg       (spacecraft mass)
-    S_Sun = 1361.0             # W/m^2    (solar irradiance at 1 AU)
-    c = 299792458.0        # m/s
-    LU_SE_m = 149597870.7e3    # m
-    LU_SM_m = 208321282.0e3    # m
+    S_Sun = SSP["S_Sun"]     # W/m^2    (solar irradiance at 1 AU)
+    c = SSP["c"]             # m/s
 
-    x_SE = (L2_SE[1] - Δx) * LU_SE_m
-    x_SM = (L2_SM[1] - Δx) * LU_SM_m
+    x_SE = (L2_SE[1] - Δx) * SSP["LU_SE"]
+    x_SM = (L2_SM[1] - Δx) * SSP["LU_SM"]
 
     A_SE = β_SE * μ_S * m_s / (2 * solar_radiation_pressure(S_Sun, x_SE) * x_SE^2)
     A_SM = β_SM * μ_S * m_s / (2 * solar_radiation_pressure(S_Sun, x_SM) * x_SM^2)

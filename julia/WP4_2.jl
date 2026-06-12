@@ -27,7 +27,7 @@ begin
     μ = SSP["μ_SM"]
 
     r_Earth_SM = SSP["LU_SE"] / SSP["LU_SM"]  # Earth-Sun distance in SM normalised units
-    r_MPO_meters = 306666e3 # 182222.0e3 # Mars parking orbit radius in meters
+    r_MPO_meters = 306666e3 # Mars parking orbit radius in meters
     r_MPO = r_MPO_meters / SSP["LU_SM"]  # Mars parking orbit radius in SM normalised units
 
     # Compute classical L2 points 
